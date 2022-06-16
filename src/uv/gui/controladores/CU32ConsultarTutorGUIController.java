@@ -55,34 +55,39 @@ public class CU32ConsultarTutorGUIController implements Initializable {
 
     Usuario usuarioActivo;
     ProgramaEducativo programaEducativoActivo;
+    Alertas alertas = new Alertas();
 
+    public void recibirParametros(Usuario usuario, ProgramaEducativo programaEducativo) {
+        usuarioActivo = usuario;
+        programaEducativoActivo = programaEducativo;
+        inicializarTablaTutores();
+    }
 
     private void inicializarTablaTutores() {
-        colNombre.setCellValueFactory(new PropertyValueFactory <DocenteEEPrograma, String>("nombre"));
-        colApellidoPaterno.setCellValueFactory(new PropertyValueFactory <DocenteEEPrograma, String>("apellidoPaterno"));
-        colApellidoMaterno.setCellValueFactory(new PropertyValueFactory <DocenteEEPrograma, String>("apellidoMaterno"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<DocenteEEPrograma, String>("nombre"));
+        colApellidoPaterno.setCellValueFactory(new PropertyValueFactory<DocenteEEPrograma, String>("apellidoPaterno"));
+        colApellidoMaterno.setCellValueFactory(new PropertyValueFactory<DocenteEEPrograma, String>("apellidoMaterno"));
         TutorDAO tutorDAO = new TutorDAO();
         ArrayList<Tutor> tutores;
         tutores = tutorDAO.consultarTodoslosTutoresPorProgramaEducativo(programaEducativoActivo.getIdProgramaEducativo());
         ObservableList<Tutor> tutoresObservableList = FXCollections.observableArrayList();
-        if (tutores.isEmpty()){
-            Alertas alertas = new Alertas();
-            alertas.mostrarAlertaSinTutores();
-        }else{
+        if (!tutores.isEmpty()) {
             for (Tutor tutores1 : tutores) {
                 tutoresObservableList.add(tutores1);
             }
-            tblTutores.setItems(tutoresObservableList);
+        } else {
+            alertas.mostrarAlertaSinTutores();
         }
+        tblTutores.setItems(tutoresObservableList);
     }
 
-
     private final ListChangeListener<Tutor> selectorTablaTutores = new ListChangeListener<Tutor>() {
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends Tutor> c) {
-                    mostrarDatosTutor();
-                }
-            };
+        @Override
+        public void onChanged(ListChangeListener.Change<? extends Tutor> c) {
+            mostrarDatosTutor();
+        }
+    };
+
     public Tutor obtenerTutorSeleccionado() {
         Tutor tutorSeleccionado = new Tutor();
         if (tblTutores != null) {
@@ -96,43 +101,39 @@ public class CU32ConsultarTutorGUIController implements Initializable {
 
     private void mostrarDatosTutor() {
         Tutor tutor = obtenerTutorSeleccionado();
-        colMatriculaTutorado.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("matricula"));
-        colNombreTutorado.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("nombre"));
-        colApellidoPaternoTutorado.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("apellidoPaterno"));
-        colApellidoMaternoTutorado.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("apellidoMaterno"));
-            String nombre = (tutor.getNombre() + " " + tutor.getApellidoPaterno() + " " + tutor.getApellidoMaterno());
-            lblNombre.setText(nombre);
-            lblCorreo.setText(tutor.getCorreo());
-            lblCuenta.setText(tutor.getCuentaUV());
+        colMatriculaTutorado.setCellValueFactory(new PropertyValueFactory<Tutorado, String>("matricula"));
+        colNombreTutorado.setCellValueFactory(new PropertyValueFactory<Tutorado, String>("nombre"));
+        colApellidoPaternoTutorado.setCellValueFactory(new PropertyValueFactory<Tutorado, String>("apellidoPaterno"));
+        colApellidoMaternoTutorado.setCellValueFactory(new PropertyValueFactory<Tutorado, String>("apellidoMaterno"));
+        String nombre = (tutor.getNombre() + " " + tutor.getApellidoPaterno() + " " + tutor.getApellidoMaterno());
+        lblNombre.setText(nombre);
+        lblCorreo.setText(tutor.getCorreo());
+        lblCuenta.setText(tutor.getCuentaUV());
 
-            TutoradoDAO tutoradoDAO = new TutoradoDAO();
-            ArrayList<Tutorado> tutoradosdeTutor;
-            tutoradosdeTutor = tutoradoDAO.buscarTutoradoPorTutorPrograma(tutor.getCuentaUV(), /*programaEducativoActivo.getIdProgramaEducativo()*/2);
+        TutoradoDAO tutoradoDAO = new TutoradoDAO();
+        ArrayList<Tutorado> tutoradosdeTutor;
+        tutoradosdeTutor = tutoradoDAO.buscarTutoradoPorTutorPrograma(tutor.getCuentaUV(), programaEducativoActivo.getIdProgramaEducativo());
+        ObservableList<Tutorado> tutoradosObservableList = FXCollections.observableArrayList();
+        for (Tutorado tutorado1 : tutoradosdeTutor) {
+            tutoradosObservableList.add(tutorado1);
+        }
 
-            ObservableList<Tutorado> tutoradosObservableList = FXCollections.observableArrayList();
-            for (Tutorado tutorado1 : tutoradosdeTutor) {
-                tutoradosObservableList.add(tutorado1);
-            }
-
-            tblTutorados.setVisible(true);
-            tblTutorados.setItems(tutoradosObservableList);
-            lblNombre.setVisible(true);
-            lblCorreo.setVisible(true);
-            lblCuenta.setVisible(true);
-            btnCerrarTutor.setVisible(true);
-
-            tblTutores.setVisible(false);
-            idTitulo.setVisible(false);
-            btnCerrarVentana.setVisible(false);
+        tblTutorados.setVisible(true);
+        tblTutorados.setItems(tutoradosObservableList);
+        lblNombre.setVisible(true);
+        lblCorreo.setVisible(true);
+        lblCuenta.setVisible(true);
+        btnCerrarTutor.setVisible(true);
+        tblTutores.setVisible(false);
+        idTitulo.setVisible(false);
+        btnCerrarVentana.setVisible(false);
     }
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.inicializarTablaTutores();
         final ObservableList<Tutor> tablaTutorSeleccioando = tblTutores.getSelectionModel().getSelectedItems();
         tablaTutorSeleccioando.addListener(selectorTablaTutores);
-    }    
+    }
 
     @FXML
     private void cerrarInformacionTutor(ActionEvent event) {
@@ -144,11 +145,6 @@ public class CU32ConsultarTutorGUIController implements Initializable {
         tblTutores.setVisible(true);
         idTitulo.setVisible(true);
         btnCerrarVentana.setVisible(true);
-    }
-
-    public void recibirParametros(Usuario usuario, ProgramaEducativo programaEducativo) {
-        usuarioActivo = usuario;
-        programaEducativoActivo = programaEducativo;
     }
 
     @FXML
