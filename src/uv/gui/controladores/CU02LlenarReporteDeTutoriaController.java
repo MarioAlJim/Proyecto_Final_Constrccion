@@ -100,7 +100,6 @@ public class CU02LlenarReporteDeTutoriaController implements Initializable {
                     Date fechaTutoriaCierre = dateFormat.parse(fechaFinTutoria);
                     if (fechaActual.equals(fechaInicioTutoria)) {
                         sesionTutoriaActiva = sesionTutoriaCiclo;
-                        System.out.println(sesionTutoriaActiva.getIdSesionTutoria());
                     } else if (fechaActual.after(fechaTutoriaInicio) && fechaActual.before(fechaTutoriaCierre)) {
                         sesionTutoriaActiva = sesionTutoriaCiclo;
                     }
@@ -149,7 +148,7 @@ public class CU02LlenarReporteDeTutoriaController implements Initializable {
         asistenciaObservableArray = FXCollections.observableArrayList();
         ArrayList<Asistencia> tutoradosAsistencia;
         ReporteTutorDAO reporteTutor = new ReporteTutorDAO();
-        tutoradosAsistencia = reporteTutor.obtenerTutoradosParaAsistencia(usuarioActivo.getCuentaUV(), 2);
+        tutoradosAsistencia = reporteTutor.obtenerTutoradosParaAsistencia(usuarioActivo.getCuentaUV(), programaEducativoActivo.getIdProgramaEducativo());
         if(!tutoradosAsistencia.isEmpty()){
             for(Asistencia asistencia : tutoradosAsistencia){
                 asistenciaObservableArray.add(asistencia);
