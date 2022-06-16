@@ -150,7 +150,7 @@ public class CU17RegistrarHorariodeSesiondeTutoriaGUIController implements Initi
                 }
             };
 
-    public Horario getTablaTutoradoHorarioRegistro() {
+    public Horario obtenerNuevoTutoradoHorario() {
         Horario horarioseleccionado = new Horario();
         if (tblTutorados != null) {
             List<Horario> tabla = tblTutorados.getSelectionModel().getSelectedItems();
@@ -162,7 +162,7 @@ public class CU17RegistrarHorariodeSesiondeTutoriaGUIController implements Initi
     }
 
     private void ponerHorarioSeleccionado() {
-        horarioSeleccionado = getTablaTutoradoHorarioRegistro();
+        horarioSeleccionado = obtenerNuevoTutoradoHorario();
         if (horarioSeleccionado != null) {
             btnGuardar.setDisable(false);
             txtHora.setDisable(false);
@@ -221,14 +221,13 @@ public class CU17RegistrarHorariodeSesiondeTutoriaGUIController implements Initi
             }else {
                 alertas.mostrarAlertarHorarioNoValido();
             }
-
         }else {
             alertas.mostrarAlertaCamposVacios();
         }
     }
 
     @FXML
-    private void cancelarOperacion(ActionEvent event) {
+    private void cerrarVentana(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
