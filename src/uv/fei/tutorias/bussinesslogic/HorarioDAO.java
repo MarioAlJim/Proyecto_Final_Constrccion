@@ -64,7 +64,7 @@ public class HorarioDAO implements IHorarioDAO {
             int idProgramaEducativo = horario.getIdProgramaEducativo();
             String query = "INSERT INTO horario (HoraInicio, IdTutoria, Matricula, cuentauv, IdProgramaEducativo) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            if (idTutoria > 0 && hora.length() < 6 && !hora.isEmpty() && !matricula.isEmpty() && matricula.length() < 10 && cuentauv.length() < 50 && !cuentauv.isEmpty()) {
+            if (idTutoria > 0 && hora.length() < 9 && !hora.isEmpty() && !matricula.isEmpty() && matricula.length() < 10 && cuentauv.length() < 50 && !cuentauv.isEmpty()) {
                 statement.setString(1, hora);
                 statement.setInt(2, idTutoria);
                 statement.setString(3, matricula);
@@ -86,7 +86,7 @@ public class HorarioDAO implements IHorarioDAO {
             int idHorario = horario.getIdHorario();
             String hora = horario.getHora();
             String query = "UPDATE horario SET HoraInicio = ? WHERE IdHorario = ?";
-            if (idHorario > 0 && hora.length() < 6 && !hora.isEmpty()){
+            if (idHorario > 0 && hora.length() < 9 && !hora.isEmpty()){
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, hora);
                 statement.setInt(2, idHorario);

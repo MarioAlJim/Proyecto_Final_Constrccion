@@ -155,6 +155,36 @@ public class TutoradoDAO implements ITutoradoDAO{
         }
         return estudiantes;
     }
-    
 
+    @Override
+    public ArrayList<Tutorado> obtenerTutoradosPorNombreCompleto() {
+        ArrayList<Tutorado> tutorados = new ArrayList<>();
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        try(Connection connection=dataBaseConnection.getConnection()){
+            String query="SELECT Nombre , ApellidoPaterno, ApellidoMaterno from tutorados";
+            PreparedStatement statement=connection.prepareStatement(query);
+            ResultSet resultSet=statement.executeQuery();
+            if (!resultSet.next()){
+                throw new SQLException("No hay tutorados registrados tutorados");
+            }else{
+                String nombre;
+                String apellidoPaterno;
+                String apellidoMaterno;
+
+                do {
+                    nombre = resultSet.getString("Nombre");
+                    apellidoPaterno = resultSet.getString("ApellidoPaterno");
+                    apellidoMaterno = resultSet.getString("ApellidoMaterno");
+                    Tutorado tutoradoBuscado = new Tutorado();
+                    tutoradoBuscado.setNombre(nombre);
+                    tutoradoBuscado.setApellidoPaterno(apellidoPaterno);
+                    tutoradoBuscado.setApellidoMaterno(apellidoMaterno);
+                    tutorados.add(tutoradoBuscado);
+                }while (resultSet.next());
+            }
+        }catch (SQLException ex) {
+            log.fatal(ex);
+        }
+        return tutorados;
+    }
 }

@@ -200,7 +200,7 @@ public class CU17RegistrarHorariodeSesiondeTutoriaGUIController implements Initi
             if(esHora && esMinuto){
                 int horas = Integer.valueOf(hora);
                 int minutos = Integer.valueOf(minuto);
-                if(horas>0 && horas <25 && minutos < 61 && minutos > 0){
+                if(horas >=0 && horas <24 && minutos < 60 && minutos >= 0){
                     String horarioEscrito = (horas + ":" + minutos + ":00");
                     horarioSeleccionado.setCuentauv(usuarioActivo.getCuentaUV());
                     horarioSeleccionado.setHora(horarioEscrito);

@@ -17,5 +17,6 @@ public interface ITutoradoDAO {
 
     public ArrayList<Tutorado> consultarTutoradosNoAsignados(int programa)throws SQLException;
 
+    public ArrayList<Tutorado> obtenerTutoradosPorNombreCompleto();
 }
 

@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -75,9 +76,9 @@ public class ConsultarEstudianteController implements Initializable {
         colApellidoPaterno.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("ApellidoPaterno"));
         colApellidoMaterno.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("ApellidoMaterno"));
 
-        TutoradoDAO tutorDao = new TutoradoDAO();
+        TutoradoDAO tutoradoDAO = new TutoradoDAO();
         ArrayList<Tutorado> tutorados;
-        tutorados = tutorDao.obtenerTutoradosPorNombreCompleto();
+        tutorados = tutoradoDAO.obtenerTutoradosPorNombreCompleto();
 
         ObservableList<Tutorado> tablaTutorado = FXCollections.observableArrayList();
         for (Tutorado tutorado : tutorados) {
@@ -90,13 +91,9 @@ public class ConsultarEstudianteController implements Initializable {
 
     @FXML
     private void salirVentana(ActionEvent event) {
-        /*
-        Optional<ButtonType> respuesta = Alertas.mostrarAlertaBoton(Alert.AlertType.ERROR, "Cancelar", "Confirmar cancelar registro",
-                "¿Esta seguro de que desea cancelar el registro?");
-        if (respuesta.get() == ButtonType.OK) {
-                stage = (Stage) panelConsultarEstudiante.getScene().getWindow();
-                stage.close();
-        }*/
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
