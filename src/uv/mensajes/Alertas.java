@@ -95,4 +95,32 @@ public class Alertas {
         alert.setContentText("Actualmente no existen periodos registrados");
         alert.showAndWait();
     }
+
+    public void mostrarCamposInvalidos() {
+        alert.setTitle("Atencion");
+        alert.setHeaderText("Informacion no valida");
+        alert.setContentText("Verifique la informacion ingresada en el formulario");
+        alert.showAndWait();
+    }
+
+    public void mostrarAlertaRegistroNoCompletado() {
+        alert.setTitle("Atencion");
+        alert.setHeaderText("Registro no completado");
+        alert.setContentText("Verifique la informacion ingresada en el formulario antes de registrar");
+        alert.showAndWait();
+    }
+
+    public void mostrarAlertaNoHayExperienciasRegistradas() {
+        alert.setTitle("Informacion");
+        alert.setHeaderText("No se encontraron experiencias");
+        alert.setContentText("No se encontraron experiencias registradas, comuniquese con su administrador");
+        alert.showAndWait();
+    }
+
+    public void mostrarAlertarNoHayDocentesRegistrados() {
+        alert.setTitle("Informacion");
+        alert.setHeaderText("No se encontraron docentes");
+        alert.setContentText("No se encontraron docentes registrados para su seleccion, comuniquese con su administrador");
+        alert.showAndWait();
+    }
 }

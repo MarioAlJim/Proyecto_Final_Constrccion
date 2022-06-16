@@ -27,8 +27,6 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
     @FXML
     private Button btnGuardar;
     @FXML
-    private Button btnNuevaProblematica;
-    @FXML
     private Button btnCancelar;
     @FXML
     private TextField txtTitulo;
@@ -37,7 +35,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
     @FXML
     private TextField txtCantidadTutorados;
 
-    int idSesion;
+    int idSesionActivs;
     Usuario usuarioActivo;
     private Alertas alertas = new Alertas();
     ProgramaEducativo programaEducativoActivo;
@@ -49,47 +47,59 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
     public void recibirParametros(Usuario usuario, ProgramaEducativo programaEducativo, int idsesion) throws SQLException {
         usuarioActivo = usuario;
         programaEducativoActivo = programaEducativo;
-        this.idSesion = idsesion;
+        idSesionActivs = idsesion;
         establecerDocentes();
     }
 
-    private void establecerDocentes() throws SQLException {
+    private void establecerDocentes() {
         ArrayList<Docente> docentes;
         DocenteDAO docenteDAO = new DocenteDAO();
-        docentes = docenteDAO.recuperarDocentesPorProgramaEducativo(programaEducativoActivo.getIdProgramaEducativo());
-        ObservableList<Docente> docentesObservableList = FXCollections.observableArrayList();
-        for (Docente docente : docentes) {
-            docentesObservableList.add(docente);
-        }
-        cbbDocente.setItems(docentesObservableList);
-        cbbDocente.valueProperty().addListener((ov, valorAntiguo, valorNuevo) -> {
-            docenteSeleccionado = (Docente) valorNuevo;
-            try {
-                establecerExperiencias(docenteSeleccionado.getNumPersonal());
-            } catch (SQLException exception) {
-                log.fatal(exception);
+        try {
+            docentes = docenteDAO.recuperarDocentesPorProgramaEducativo(programaEducativoActivo.getIdProgramaEducativo());
+            ObservableList<Docente> docentesObservableList = FXCollections.observableArrayList();
+            if (!docentes.isEmpty()) {
+                for (Docente docente : docentes) {
+                    docentesObservableList.add(docente);
+                }
+            } else {
+                alertas.mostrarAlertarNoHayDocentesRegistrados();
             }
-        });
+            cbbDocente.setItems(docentesObservableList);
+            cbbDocente.valueProperty().addListener((ov, valorAntiguo, valorNuevo) -> {
+                docenteSeleccionado = (Docente) valorNuevo;
+                    establecerExperiencias(docenteSeleccionado.getNumPersonal());
+            });
+        } catch (SQLException exception){
+            alertas.mostrarAlertaErrorConexionDB();
+            log.fatal(exception);
+        }
     }
 
-    private void establecerExperiencias(int numPersonal) throws SQLException {
+    private void establecerExperiencias(int numPersonal) {
         ArrayList<ExperienciaEducativa> experienciasEducativas;
         ObservableList<ExperienciaEducativa> experienciaEducativaObservableList = FXCollections.observableArrayList();
-        ExperienciaEducativaDAO experienciaEducativaDAO = new ExperienciaEducativaDAO();
-        experienciasEducativas = experienciaEducativaDAO.consultarExperienciasPorDocente(numPersonal);
-        if (!experienciasEducativas.isEmpty()) {
-            for(ExperienciaEducativa experienciaEducativa: experienciasEducativas){
-                experienciaEducativaObservableList.add(experienciaEducativa);
+        try {
+            ExperienciaEducativaDAO experienciaEducativaDAO = new ExperienciaEducativaDAO();
+            experienciasEducativas = experienciaEducativaDAO.consultarExperienciasPorDocente(numPersonal);
+            if (!experienciasEducativas.isEmpty()) {
+                for (ExperienciaEducativa experienciaEducativa : experienciasEducativas) {
+                    experienciaEducativaObservableList.add(experienciaEducativa);
+                }
+            } else {
+                alertas.mostrarAlertaNoHayExperienciasRegistradas();
             }
+            cbbExperienciaEducativa.setItems(experienciaEducativaObservableList);
+            cbbExperienciaEducativa.valueProperty().addListener((ov, valorAntiguo, valorNuevo) -> {
+                experienciaEducativaSeleccionada = (ExperienciaEducativa) valorNuevo;
+            });
+        } catch (SQLException exception){
+            alertas.mostrarAlertaErrorConexionDB();
+            log.fatal(exception);
         }
-        cbbExperienciaEducativa.setItems(experienciaEducativaObservableList);
-        cbbExperienciaEducativa.valueProperty().addListener((ov, valorAntiguo, valorNuevo) -> {
-            experienciaEducativaSeleccionada = (ExperienciaEducativa) valorNuevo;
-        });
     }
 
     @FXML
-    private void comprobarProblematica(ActionEvent event) throws SQLException {
+    private void comprobarInformacionCompleta(ActionEvent event) throws SQLException {
         Alertas alertas = new Alertas();
         if(txtCantidadTutorados.getText().isEmpty()){
             alertas.mostrarAlertaCamposVacios();
@@ -104,6 +114,8 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         }else {
             if(comprobarDatosValidos() == 3){
                 guardarProblematica();
+            } else {
+                alertas.mostrarCamposInvalidos();
             }
         }
     }
@@ -126,28 +138,30 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         return datosValidos;
     }
 
-    private void guardarProblematica() throws SQLException {
+    private void guardarProblematica() {
+        ProblematicaAcademica problematicaAcademica = new ProblematicaAcademica();
+        ProblematicaAcademicaDAO problematicaAcademicaDAO = new ProblematicaAcademicaDAO();
+        int cantidadTutorados = Integer.parseInt(txtCantidadTutorados.getText());
+        String titulo = txtTitulo.getText();
+        String descripcion = txtDescrpcion.getText();
+        int numPersonal = docenteSeleccionado.getNumPersonal();
+        int nrc = experienciaEducativaSeleccionada.getNrc();
+        int idDocenteEE = obtenerIdDocenteEEPrograma();
+        if (idDocenteEE != 0) {
+            problematicaAcademica.setIdDocenteEePrograma(idDocenteEE);
+        }
+        problematicaAcademica.setCantidadTutorados(cantidadTutorados);
+        problematicaAcademica.setDescripcion(descripcion);
+        problematicaAcademica.setTitulo(titulo);
         try {
-            ProblematicaAcademica problematicaAcademica = new ProblematicaAcademica();
-            ProblematicaAcademicaDAO problematicaAcademicaDAO = new ProblematicaAcademicaDAO();
-            int cantidadTutorados = Integer.parseInt(txtCantidadTutorados.getText());
-            String titulo = txtTitulo.getText();
-            String descripcion = txtDescrpcion.getText();
-            int numPersonal = docenteSeleccionado.getNumPersonal();
-            int nrc = experienciaEducativaSeleccionada.getNrc();
-            int idDocenteEE = obtenerIdDocenteEEPrograma();
-            if (idDocenteEE != 0) {
-                problematicaAcademica.setIdDocenteEePrograma(idDocenteEE);
-            }
-            problematicaAcademica.setCantidadTutorados(cantidadTutorados);
-            problematicaAcademica.setDescripcion(descripcion);
-            problematicaAcademica.setTitulo(titulo);
-            int resultado = problematicaAcademicaDAO.registrarProblematicaAcademica(problematicaAcademica, idSesion);
+            int resultado = problematicaAcademicaDAO.registrarProblematicaAcademica(problematicaAcademica, idSesionActivs);
             int idProblematicaNueva = problematicaAcademicaDAO.obtenerIdProblematica(problematicaAcademica.getTitulo(), cantidadTutorados);
-            int resultadoDos = problematicaAcademicaDAO.vinculaProblematicaSesion(idProblematicaNueva, idSesion);
+            int resultadoDos = problematicaAcademicaDAO.vinculaProblematicaSesion(idProblematicaNueva, idSesionActivs);
             if ((resultado + resultadoDos) == 2) {
                 Alertas alertas = new Alertas();
                 alertas.mostrarAlertaRegistroExitoso();
+            } else {
+                alertas.mostrarAlertaRegistroNoCompletado();
             }
         }catch (SQLException exception){
             alertas.mostrarAlertaErrorConexionDB();
@@ -162,9 +176,13 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
             idDocenteEE = docenteEEProgramasDAO.obtenerIdDocenteEEPrograma(docenteSeleccionado.getNumPersonal(), experienciaEducativaSeleccionada.getNrc());
         } catch (SQLException exception) {
             alertas.mostrarAlertaErrorConexionDB();
-            exception.printStackTrace();
+            log.fatal(exception);
         }
         return idDocenteEE;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
     }
 
     @FXML
@@ -174,12 +192,8 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         stage.close();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
-
     @FXML
-    private void nuevoRegistro(ActionEvent event) {
+    private void limpiarCampos(ActionEvent event) {
         txtDescrpcion.setText("");
         txtTitulo.setText("");
         txtCantidadTutorados.setText("");

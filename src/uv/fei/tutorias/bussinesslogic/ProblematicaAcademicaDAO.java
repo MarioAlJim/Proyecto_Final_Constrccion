@@ -5,16 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import org.apache.log4j.Logger;
 import uv.fei.tutorias.dataaccess.DataBaseConnection;
 import uv.fei.tutorias.domain.ProblematicaAcademica;
 import uv.fei.tutorias.domain.ProblematicaReporte;
-import uv.gui.controladores.CU06ConsultarProblematicasAcademicasController;
 
 
 public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
-
-    final static Logger log = Logger.getLogger(CU06ConsultarProblematicasAcademicasController.class);
 
     @Override
     public ArrayList<ProblematicaReporte> consultarTodasLasProblematicasPorProgramaEducativoCuenta(int idProgramaEducativo, String cuentaUv) throws SQLException {
@@ -64,44 +60,6 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         return problematicasAcademicas;
     }
 
-    /*@Override
-    public ProblematicaReporte consultarProblematicaPorId(int idProblematicaAcademicaBuscada) throws SQLException {
-        ProblematicaReporte problematicaAcademica = new ProblematicaReporte();
-        DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        Connection connection = dataBaseConnection.getConnection();
-        String query = "SELECT p.*, d.Nombre Docente, ed.Nombre Experiencia FROM tutoriasproblematicasacademicas p " +
-                "INNER JOIN docenteseeprogramas deep on deep.IdDocenteEEPrograma = p.IdDocentesEEProgramas " +
-                "INNER JOIN docentes d on d.NumPersonal = deep.NumPersonal " +
-                "INNER JOIN experienciaseducativas ed on ed.NRC = deep.NRC " +
-                "WHERE IdProblemaAcademica = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, idProblematicaAcademicaBuscada);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            int idProblematicaAcademica;
-            String descripcion;
-            String titulo;
-            String experiencia;
-            String docente;
-            int cantidadTutorados;
-            do {
-                idProblematicaAcademica = resultSet.getInt("IdProblemaAcademica");
-                descripcion = resultSet.getString("Descripcion");
-                titulo = resultSet.getString("Titulo");
-                experiencia = resultSet.getString("Experiencia");
-                docente = resultSet.getString("Docente");
-                cantidadTutorados = resultSet.getInt("cantidadTutorados");
-                problematicaAcademica.setIdProblematicaAcademica(idProblematicaAcademica);
-                problematicaAcademica.setDescripcion(descripcion);
-                problematicaAcademica.setTitulo(titulo);
-                problematicaAcademica.setNombreDocente(docente);
-                problematicaAcademica.setExperiencia(experiencia);
-                problematicaAcademica.setCantidadTutorados(cantidadTutorados);
-            } while (resultSet.next());
-        }
-        return problematicaAcademica;
-    }*/
-
     @Override
     public int registrarProblematicaAcademica(ProblematicaAcademica problematicaAcademica, int idSesion) throws SQLException {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
@@ -113,12 +71,14 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         int cantidadTutorados = problematicaAcademica.getCantidadTutorados();
         String query = "INSERT INTO tutoriasproblematicasacademicas (Titulo, Descripcion, cantidadTutorados, IdDocentesEEProgramas) "
                 + "VALUES (?, ?, ?, ?)";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, titulo);
-        statement.setString(2, descripcion);
-        statement.setInt(3, cantidadTutorados);
-        statement.setInt(4, idDocenteEePrograma);
-        filasInsertadas = statement.executeUpdate();
+        if(titulo.length() < 100 && descripcion.length() < 500 && cantidadTutorados > 0 && idDocenteEePrograma > 0){
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, titulo);
+            statement.setString(2, descripcion);
+            statement.setInt(3, cantidadTutorados);
+            statement.setInt(4, idDocenteEePrograma);
+            filasInsertadas = statement.executeUpdate();
+        }
         return filasInsertadas;
     }
 
@@ -126,9 +86,8 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         int filasInsertadas;
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         Connection connection = dataBaseConnection.getConnection();
-        String querySecundario = "INSERT INTO tutoriasproblematicassesiones (idproblemaacademica, idsesion) "
-                + "VALUES (?, ?)";
-        PreparedStatement statement = connection.prepareStatement(querySecundario);
+        String query = "INSERT INTO tutoriasproblematicassesiones (idproblemaacademica, idsesion) VALUES (?, ?)";
+        PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, idProblematica);
         statement.setInt(2, idSesion);
         filasInsertadas = statement.executeUpdate();
@@ -157,7 +116,6 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         int filasActualizadas = 0;
         Connection connection = dataBaseConnection.getConnection();
         int idProblematicaAcademica = problematicaAcademica.getIdProblematicaAcademica();
-
         String query;
         query = ("DELETE FROM `sistematutoriasfei`.`tutoriasproblematicassesiones` WHERE (`IdProblemaAcademica` = ?);");
         PreparedStatement statement = connection.prepareStatement(query);
