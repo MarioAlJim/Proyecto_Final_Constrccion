@@ -102,13 +102,13 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         }else if(experienciaEducativaSeleccionada == null){
             alertas.mostrarAlertaCamposVacios();
         }else {
-            if(cantidadTutorados() == 3){
+            if(comprobarDatosValidos() == 3){
                 guardarProblematica();
             }
         }
     }
 
-    private int cantidadTutorados() {
+    private int comprobarDatosValidos() {
         int datosValidos = 0;
         String cantidadTutorados = txtCantidadTutorados.getText();
         if(cantidadTutorados.matches("[+-]?\\d*(\\.\\d+)?")) {
