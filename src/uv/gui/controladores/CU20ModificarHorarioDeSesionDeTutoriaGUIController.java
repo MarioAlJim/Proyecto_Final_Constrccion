@@ -162,16 +162,16 @@ public class CU20ModificarHorarioDeSesionDeTutoriaGUIController implements Initi
                 int minutos = Integer.valueOf(minuto);
                 if(horas>0 && horas <25 && minutos < 61 && minutos > 0) {
                     int resultado = 0;
-                    horarioSeleccionado.setHora(horas + ":" + minutos);
+                    horarioSeleccionado.setHora(horas + ":" + minutos + ":00" );
                     HorarioDAO horarioDAO = new HorarioDAO();
-                    horarioDAO.actualizarHorario(horarioSeleccionado);
+                    resultado = horarioDAO.actualizarHorario(horarioSeleccionado);
                     btnCerrar.setDisable(false);
                     btnGuardar.setDisable(true);
                     txtHora.setDisable(true);
                     txtMinuto.setDisable(true);
                     txtHora.setText("");
                     txtMinuto.setText("");
-                    if (!(resultado == 0)) {
+                    if (resultado == 1) {
                         horarioExistenteObservableList.set(horarioExistenteObservableList.indexOf(horarioSeleccionado), horarioSeleccionado);
                     }
                 } else {
