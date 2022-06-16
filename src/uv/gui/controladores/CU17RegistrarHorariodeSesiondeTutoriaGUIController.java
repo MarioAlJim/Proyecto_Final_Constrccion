@@ -73,7 +73,6 @@ public class CU17RegistrarHorariodeSesiondeTutoriaGUIController implements Initi
         colMatricula.setCellValueFactory(new PropertyValueFactory<Horario, String>("matricula"));
         colNombre.setCellValueFactory(new PropertyValueFactory <Horario, String>("nombre"));
         colHorario.setCellValueFactory(new PropertyValueFactory <Horario, String>("hora"));
-
         colMatriculaTutorados.setCellValueFactory(new PropertyValueFactory<Horario, String>("matricula"));
         colNombreTutorados.setCellValueFactory(new PropertyValueFactory<Horario, String>("nombre"));
     }
@@ -83,8 +82,12 @@ public class CU17RegistrarHorariodeSesiondeTutoriaGUIController implements Initi
         PeriodoDAO periodoDAO = new PeriodoDAO();
         try {
             periodo = periodoDAO.consultarPeriodoActivo();
-            lblPeriodo.setText(periodo.toString());
-            mostrarFechasDeTutoria(periodo);
+            if (periodo.getFechaFin() != null){
+                lblPeriodo.setText(periodo.toString());
+                mostrarFechasDeTutoria(periodo);
+            }else {
+                alertas.mostrarAlertaNoHayPeriodosRegistrados();
+            }
         } catch (SQLException exception) {
             log.fatal(exception);
         }

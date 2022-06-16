@@ -88,4 +88,11 @@ public class Alertas {
         alert.setContentText("El formato de la hora que ingreso no es valido");
         alert.showAndWait();
     }
+
+    public void mostrarAlertaNoHayPeriodosRegistrados() {
+        alert.setTitle("Atencion");
+        alert.setHeaderText("No existe un periodo");
+        alert.setContentText("Actualmente no existen periodos registrados");
+        alert.showAndWait();
+    }
 }

@@ -14,7 +14,7 @@ public class DocenteDAOTest {
     public DocenteDAOTest() {
     }
 
-    @org.junit.Test
+    @Test
     public void testRecuperarDocentesPorProgramaEducativo() throws Exception {
         System.out.println("recuperarDocentesPorProgramaEducativo");
         int idPrograma = 0;
