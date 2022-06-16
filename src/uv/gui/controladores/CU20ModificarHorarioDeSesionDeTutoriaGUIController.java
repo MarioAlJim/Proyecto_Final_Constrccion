@@ -44,8 +44,9 @@ public class CU20ModificarHorarioDeSesionDeTutoriaGUIController implements Initi
     @FXML
     private Button btnGuardar;
     @FXML
-    private TextField txtHorario;
-
+    private TextField txtHora;
+    @FXML
+    private TextField txtMinuto;
     Alertas alertas = new Alertas();
     Usuario usuarioActivo;
     ProgramaEducativo programaEducativoActivo;
@@ -77,12 +78,14 @@ public class CU20ModificarHorarioDeSesionDeTutoriaGUIController implements Initi
         opcionesCombo = FXCollections.observableArrayList();
         SesionTutoriaDAO sesionTutoriaDAO = new SesionTutoriaDAO();
         ArrayList<SesionTutoria> sesionesTutorias = sesionTutoriaDAO.consultarTutoriaPorPeriodo(periodo.getIdPeriodo());
-
-        for(SesionTutoria sesionTutoriaciclo : sesionesTutorias){
-            opcionesCombo.add(sesionTutoriaciclo);
+        if (!sesionesTutorias.isEmpty()) {
+            for (SesionTutoria sesionTutoriaciclo : sesionesTutorias) {
+                opcionesCombo.add(sesionTutoriaciclo);
+            }
+        } else {
+            alertas.mostrarAlertaNoHayFechasDeTutoriaRegistradas();
         }
         cbbFechaTutoria.setItems(opcionesCombo);
-
         cbbFechaTutoria.valueProperty().addListener((ov, valorAntiguo, valorNuevo) -> {
                 tblTutoradosHorario.getItems().clear();
                 if(valorNuevo != null){
@@ -121,7 +124,7 @@ public class CU20ModificarHorarioDeSesionDeTutoriaGUIController implements Initi
                 }
             };
 
-    public Horario getTablaHorarioSeleccionada() {
+    public Horario obtenerHorariodeTabla() {
         Horario horarioseleccionado = new Horario();
         if (tblTutoradosHorario != null) {
             List<Horario> tabla = tblTutoradosHorario.getSelectionModel().getSelectedItems();
@@ -133,24 +136,53 @@ public class CU20ModificarHorarioDeSesionDeTutoriaGUIController implements Initi
     }
 
     private void ponerHorarioSeleccionado() {
-        horarioSeleccionado = getTablaHorarioSeleccionada();
-        if (horarioSeleccionado != null) {
+        horarioSeleccionado = obtenerHorariodeTabla();
             btnGuardar.setDisable(false);
-            txtHorario.setDisable(false);
+            txtHora.setDisable(false);
+            txtMinuto.setDisable(false);
             btnCerrar.setDisable(true);
-        }
     }
 
     @FXML
     private void modificarHorario(ActionEvent event) {
-        if(!txtHorario.getText().isEmpty()){
-            String horarioEscrito = txtHorario.getText();
-            horarioSeleccionado.setHora(horarioEscrito);
-            horarioExistenteObservableList.set(horarioExistenteObservableList.indexOf(horarioSeleccionado), horarioSeleccionado);
-            HorarioDAO horarioDAO = new HorarioDAO();
-            horarioDAO.actualizarHorario(horarioSeleccionado);
-            btnCerrar.setDisable(false);
-            btnGuardar.setDisable(true);
+        if(!txtMinuto.getText().isEmpty() && !txtHora.getText().isEmpty()){
+            String hora = txtHora.getText();
+            String minuto = txtMinuto.getText();
+            boolean esHora = true;
+            for (int i = 0; i < hora.length(); i++) {
+                if (!Character.isDigit(hora.charAt(i))) {
+                    esHora = false;
+                }
+            }
+            boolean esMinuto = true;
+            for (int i = 0; i < minuto.length(); i++) {
+                if (!Character.isDigit(minuto.charAt(i))) {
+                    esMinuto = false;
+                }
+            }
+            if (esHora && esMinuto) {
+                int horas = Integer.valueOf(hora);
+                int minutos = Integer.valueOf(minuto);
+                if(horas>0 && horas <25 && minutos < 61 && minutos > 0) {
+                    int resultado = 0;
+                    horarioSeleccionado.setHora(horas + ":" + minutos);
+                    HorarioDAO horarioDAO = new HorarioDAO();
+                    horarioDAO.actualizarHorario(horarioSeleccionado);
+                    btnCerrar.setDisable(false);
+                    btnGuardar.setDisable(true);
+                    txtHora.setDisable(true);
+                    txtMinuto.setDisable(true);
+                    txtHora.setText("");
+                    txtMinuto.setText("");
+                    if (!(resultado == 0)) {
+                        horarioExistenteObservableList.set(horarioExistenteObservableList.indexOf(horarioSeleccionado), horarioSeleccionado);
+                    }
+                } else {
+                    alertas.mostrarAlertarHorarioNoValido();
+                }
+            } else {
+                alertas.mostrarAlertarHorarioNoValido();
+            }
         }
     }
 

@@ -14,72 +14,37 @@ public class HorarioDAO implements IHorarioDAO {
     final static Logger log = Logger.getLogger(HorarioDAO.class);
 
     @Override
-    public ArrayList<Horario> consultarTodosLosHorarios() {
+    public ArrayList<Horario> consultarHorariosporIdTutoria(String cuentauv, int idTutoria, int idProgramaEducativo) {
         ArrayList<Horario> horarios= new ArrayList<>();
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         try(Connection connection=dataBaseConnection.getConnection()){
-            String query="SELECT * FROM horarios;";
-            PreparedStatement statement=connection.prepareStatement(query);
-            ResultSet resultSet=statement.executeQuery();
-            if (!resultSet.next()){
-                throw new SQLException("No se encontraron horarios");
-            }else{
-                int  idHorario;
-                String hora;
-                int idTutoria;
-                String matricula;
-                do {
-                    idHorario = resultSet.getInt("IdHorario");
-                    hora = resultSet.getString("HoraInicio");
-                    idTutoria = resultSet.getInt("Idtutoria");
-                    matricula = resultSet.getString("Matricula");
-                    Horario horario = new Horario();
-                    horario.setIdHorario(idHorario);
-                    horario.setHora(hora);
-                    horario.setIdTutoria(idTutoria);
-                    horario.setMatricula(matricula);
-                    horarios.add(horario);
-                }while (resultSet.next());
-            }
-        }catch (SQLException ex) {
-           log.fatal(ex);
-        }
-        return horarios;
-    }
-
-    @Override
-    public ArrayList<Horario> consultarHorariosporIdTutoria(String cuentauv, int Idtutoria, int programaEducativo) {
-        ArrayList<Horario> horarios= new ArrayList<>();
-        DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        try(Connection connection=dataBaseConnection.getConnection()){
-            String query=
-                    ("SELECT IdTutoria, IdHorario, HoraInicio, T.Matricula, concat_ws(' ', T.Nombre, T.ApellidoPaterno, ApellidoMaterno) Tutorado " +
+            String query= ("SELECT IdTutoria, IdHorario, HoraInicio, T.Matricula, concat_ws(' ', T.Nombre, T.ApellidoPaterno, ApellidoMaterno) Tutorado " +
                             "FROM horario inner join tutorados T on T.Matricula = horario.Matricula WHERE IdTutoria = ? and cuentauv = ? AND IdProgramaEducativo = ?");
             PreparedStatement statement=connection.prepareStatement(query);
-            statement.setInt(1, Idtutoria);
-            statement.setString(2, cuentauv);
-            statement.setInt(3, programaEducativo);
-            ResultSet resultSet=statement.executeQuery();
-            if (resultSet.next()){
-                int idHorario;
-                String hora;
-                int idTutoria;
-                String matricula;
-                String tutorado;
-                do {
-                    idTutoria = resultSet.getInt("IdTutoria");
-                    idHorario = resultSet.getInt("IdHorario");
-                    hora = resultSet.getString("HoraInicio");
-                    matricula = resultSet.getString("Matricula");
-                    tutorado = resultSet.getString("Tutorado");
-                    Horario horario = new Horario();
-                    horario.setIdHorario(idHorario);
-                    horario.setHora(hora);
-                    horario.setIdTutoria(idTutoria);
-                    horario.setMatricula(matricula);
-                    horario.setNombre(tutorado);
-                    horarios.add(horario);
-                }while(resultSet.next());
+            if (idTutoria > 0 && idProgramaEducativo > 0) {
+                statement.setInt(1, idTutoria);
+                statement.setString(2, cuentauv);
+                statement.setInt(3, idProgramaEducativo);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    int idHorario;
+                    String hora;
+                    String matricula;
+                    String tutorado;
+                    do {
+                        idHorario = resultSet.getInt("IdHorario");
+                        hora = resultSet.getString("HoraInicio");
+                        matricula = resultSet.getString("Matricula");
+                        tutorado = resultSet.getString("Tutorado");
+                        Horario horario = new Horario();
+                        horario.setIdHorario(idHorario);
+                        horario.setHora(hora);
+                        horario.setIdTutoria(idTutoria);
+                        horario.setMatricula(matricula);
+                        horario.setNombre(tutorado);
+                        horarios.add(horario);
+                    } while (resultSet.next());
+                }
             }
         }catch (SQLException ex) {
             log.fatal(ex);

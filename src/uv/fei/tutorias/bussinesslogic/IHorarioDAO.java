@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IHorarioDAO {
-    public ArrayList<Horario> consultarTodosLosHorarios();
 
     public ArrayList<Horario> consultarHorariosporIdTutoria(String cuentauv, int Idtutoria, int idProgramaEducativo);
 
