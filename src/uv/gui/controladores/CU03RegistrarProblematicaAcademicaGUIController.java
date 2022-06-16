@@ -156,7 +156,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         try {
             int resultado = problematicaAcademicaDAO.registrarProblematicaAcademica(problematicaAcademica, idSesionActiva);
             int idProblematicaNueva = problematicaAcademicaDAO.obtenerIdProblematica(problematicaAcademica.getTitulo(), cantidadTutorados);
-            int resultadoDos = problematicaAcademicaDAO.vinculaProblematicaSesion(idProblematicaNueva, idSesionActiva);
+            int resultadoDos = problematicaAcademicaDAO.vincularProblematicaSesion(idProblematicaNueva, idSesionActiva);
             if ((resultado + resultadoDos) == 2) {
                 Alertas alertas = new Alertas();
                 alertas.mostrarAlertaRegistroExitoso();

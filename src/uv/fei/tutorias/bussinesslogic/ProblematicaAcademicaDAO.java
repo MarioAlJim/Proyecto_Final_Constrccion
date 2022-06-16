@@ -81,31 +81,49 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         return filasInsertadas;
     }
 
-    public int vinculaProblematicaSesion(int idProblematica, int idSesion) throws SQLException{
-        int filasInsertadas;
+    @Override
+    public int vincularProblematicaSesion(int idProblematica, int idSesion) throws SQLException{
+        int filasInsertadas = 0;
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         Connection connection = dataBaseConnection.getConnection();
         String query = "INSERT INTO tutoriasproblematicassesiones (idproblemaacademica, idsesion) VALUES (?, ?)";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, idProblematica);
-        statement.setInt(2, idSesion);
-        filasInsertadas = statement.executeUpdate();
+        if (idProblematica > 0 && idSesion > 0) {
+            statement.setInt(1, idProblematica);
+            statement.setInt(2, idSesion);
+            filasInsertadas = statement.executeUpdate();
+        }
         return filasInsertadas;
     }
-    
+
+    public int obtenerIdProblematica(String titulo, int cantidadTutorados) throws SQLException{
+        int idProblematica = 0;
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        Connection connection = dataBaseConnection.getConnection();
+        String query = "SELECT * FROM tutoriasproblematicasacademicas WHERE Titulo = ? AND cantidadTutorados = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, titulo);
+        statement.setInt(2, cantidadTutorados);
+        ResultSet resultSet = statement.executeQuery();
+        if(resultSet.next()){
+            idProblematica = resultSet.getInt("IdProblemaAcademica");
+        }
+        return idProblematica;
+    }
+
     @Override
     public int eliminarProblematica(ProblematicaAcademica problematicaAcademica) throws SQLException {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         int filasActualizadas = 0;
         Connection connection = dataBaseConnection.getConnection();
         int idProblematicaAcademica = problematicaAcademica.getIdProblematicaAcademica();
-
         String query;
         query = ("DELETE FROM `sistematutoriasfei`.`tutoriasproblematicasacademicas` WHERE (`IdProblemaAcademica` = ?);");
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, idProblematicaAcademica);
-        filasActualizadas = statement.executeUpdate();
-        System.out.println(filasActualizadas + " filas modificadas");
+        if (idProblematicaAcademica > 0) {
+            statement.setInt(1, idProblematicaAcademica);
+            filasActualizadas = statement.executeUpdate();
+        }
         return filasActualizadas;
     }
 
@@ -143,21 +161,5 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         System.out.println(filasActualizadas + " filas modificadas");
         return filasActualizadas;
     }
-
-    public int obtenerIdProblematica(String titulo, int cantidadTutorados) throws SQLException{
-        int idProblematica = 0;
-        DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        Connection connection = dataBaseConnection.getConnection();
-        String query = "SELECT * FROM tutoriasproblematicasacademicas WHERE Titulo = ? AND cantidadTutorados = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, titulo);
-        statement.setInt(2, cantidadTutorados);
-        ResultSet resultSet = statement.executeQuery();
-        if(resultSet.next()){
-            idProblematica = resultSet.getInt("IdProblemaAcademica");
-        }
-        return idProblematica;
-    }
-
 
 }

@@ -14,6 +14,8 @@ public interface IPoblematicaAcademicaDAO {
     
     public int actualizarProblematica(ProblematicaAcademica problematicaAcademica)throws SQLException;
 
+    int vincularProblematicaSesion(int idProblematica, int idSesion) throws SQLException;
+
     public int eliminarProblematica(ProblematicaAcademica problematicaAcademica) throws SQLException;
 
     public int eliminarProblematicaSesiones(ProblematicaAcademica problematicaAcademica) throws SQLException;
