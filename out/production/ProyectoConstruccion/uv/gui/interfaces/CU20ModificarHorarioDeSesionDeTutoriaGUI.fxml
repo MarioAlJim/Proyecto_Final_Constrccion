@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="464.0" prefWidth="652.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="uv.gui.controladores.CU20ModificarHorarioDeSesionDeTutoriaGUIController">
+<AnchorPane id="AnchorPane" prefHeight="464.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.gui.controladores.CU20ModificarHorarioDeSesionDeTutoriaGUIController">
        <children>
       <TableView fx:id="tblTutoradosHorario" disable="true" layoutX="99.0" layoutY="91.0" prefHeight="249.0" prefWidth="446.0">
         <columns>
@@ -24,7 +24,11 @@
       <Label layoutX="70.0" layoutY="35.0" text="Tutoria" />
       <Text layoutX="71.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecciona un tutorado para registra el horario" />
       <Label layoutX="68.0" layoutY="361.0" text="Registre el horario para el alumno seleccionado" />
-      <TextField fx:id="txtHorario" layoutX="358.0" layoutY="357.0" />
-      <Text layoutX="358.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ejemplo: 09:20:00" />
+      <TextField fx:id="txtHora" layoutX="358.0" layoutY="357.0" prefHeight="25.0" prefWidth="42.0" />
+      <Text layoutX="373.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ejemplo: 09:20" />
+      <Label layoutX="405.0" layoutY="361.0" prefHeight="17.0" prefWidth="12.0" text=":" />
+      <TextField fx:id="txtMinuto" layoutX="415.0" layoutY="357.0" prefHeight="25.0" prefWidth="42.0" />
+      <Text layoutX="366.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hora" />
+      <Text layoutX="419.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Minuto" />
    </children>
 </AnchorPane>
