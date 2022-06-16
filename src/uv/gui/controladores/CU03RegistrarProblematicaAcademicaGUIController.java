@@ -56,7 +56,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
     private void establecerDocentes() throws SQLException {
         ArrayList<Docente> docentes;
         DocenteDAO docenteDAO = new DocenteDAO();
-        docentes = docenteDAO.recuperarDocentesPorProgramaEducativo(1); // reemplazar por programa educativo
+        docentes = docenteDAO.recuperarDocentesPorProgramaEducativo(programaEducativoActivo.getIdProgramaEducativo());
         ObservableList<Docente> docentesObservableList = FXCollections.observableArrayList();
         for (Docente docente : docentes) {
             docentesObservableList.add(docente);
@@ -77,8 +77,10 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         ObservableList<ExperienciaEducativa> experienciaEducativaObservableList = FXCollections.observableArrayList();
         ExperienciaEducativaDAO experienciaEducativaDAO = new ExperienciaEducativaDAO();
         experienciasEducativas = experienciaEducativaDAO.consultarExperienciasPorDocente(numPersonal);
-        for(ExperienciaEducativa experienciaEducativa: experienciasEducativas){
-            experienciaEducativaObservableList.add(experienciaEducativa);
+        if (!experienciasEducativas.isEmpty()) {
+            for(ExperienciaEducativa experienciaEducativa: experienciasEducativas){
+                experienciaEducativaObservableList.add(experienciaEducativa);
+            }
         }
         cbbExperienciaEducativa.setItems(experienciaEducativaObservableList);
         cbbExperienciaEducativa.valueProperty().addListener((ov, valorAntiguo, valorNuevo) -> {
@@ -100,8 +102,28 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         }else if(experienciaEducativaSeleccionada == null){
             alertas.mostrarAlertaCamposVacios();
         }else {
-            guardarProblematica();
+            if(cantidadTutorados() == 3){
+                guardarProblematica();
+            }
         }
+    }
+
+    private int cantidadTutorados() {
+        int datosValidos = 0;
+        String cantidadTutorados = txtCantidadTutorados.getText();
+        if(cantidadTutorados.matches("[+-]?\\d*(\\.\\d+)?")) {
+            int catidad = Integer.parseInt(cantidadTutorados);
+            if(catidad > 0 && catidad < 30) {
+                ++datosValidos;
+            }
+        }
+        if(txtTitulo.getText().length() < 100) {
+            ++datosValidos;
+        }
+        if(txtDescrpcion.getText().length() < 500){
+            ++datosValidos;
+        }
+        return datosValidos;
     }
 
     private void guardarProblematica() throws SQLException {
