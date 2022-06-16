@@ -123,4 +123,11 @@ public class Alertas {
         alert.setContentText("No se encontraron docentes registrados para su seleccion, comuniquese con su administrador");
         alert.showAndWait();
     }
+
+    public void mostrarAlertaNoHayFechaDeTutoriaActiva() {
+        alert.setTitle("Informacion");
+        alert.setHeaderText("No hay tutorias activas");
+        alert.setContentText("Actualmente no hay ningna fecha de tutoria activa, por favor cantacte con su respectivo coordinador de tutorias");
+        alert.showAndWait();
+    }
 }

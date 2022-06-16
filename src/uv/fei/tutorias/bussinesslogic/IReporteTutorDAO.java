@@ -15,7 +15,7 @@ public interface IReporteTutorDAO {
 
     public ArrayList<Asistencia> obtenerTutoradosParaAsistencia(String cuentaUV, int idProgramaEducativo);
 
-    public void eliminarReporteIncompleto(int idSesion) throws SQLException;
+    public int eliminarReporteIncompleto(int idSesion) throws SQLException;
 
     public int registrarReporte(ReporteTutor reporteTutor) throws SQLException;
 

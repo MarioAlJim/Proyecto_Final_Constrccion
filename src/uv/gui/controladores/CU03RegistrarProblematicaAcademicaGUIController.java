@@ -35,7 +35,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
     @FXML
     private TextField txtCantidadTutorados;
 
-    int idSesionActivs;
+    int idSesionActiva;
     Usuario usuarioActivo;
     private Alertas alertas = new Alertas();
     ProgramaEducativo programaEducativoActivo;
@@ -47,7 +47,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
     public void recibirParametros(Usuario usuario, ProgramaEducativo programaEducativo, int idsesion) throws SQLException {
         usuarioActivo = usuario;
         programaEducativoActivo = programaEducativo;
-        idSesionActivs = idsesion;
+        idSesionActiva = idsesion;
         establecerDocentes();
     }
 
@@ -154,9 +154,9 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         problematicaAcademica.setDescripcion(descripcion);
         problematicaAcademica.setTitulo(titulo);
         try {
-            int resultado = problematicaAcademicaDAO.registrarProblematicaAcademica(problematicaAcademica, idSesionActivs);
+            int resultado = problematicaAcademicaDAO.registrarProblematicaAcademica(problematicaAcademica, idSesionActiva);
             int idProblematicaNueva = problematicaAcademicaDAO.obtenerIdProblematica(problematicaAcademica.getTitulo(), cantidadTutorados);
-            int resultadoDos = problematicaAcademicaDAO.vinculaProblematicaSesion(idProblematicaNueva, idSesionActivs);
+            int resultadoDos = problematicaAcademicaDAO.vinculaProblematicaSesion(idProblematicaNueva, idSesionActiva);
             if ((resultado + resultadoDos) == 2) {
                 Alertas alertas = new Alertas();
                 alertas.mostrarAlertaRegistroExitoso();

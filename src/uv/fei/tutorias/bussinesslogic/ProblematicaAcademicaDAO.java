@@ -69,8 +69,7 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         String titulo = problematicaAcademica.getTitulo();
         int idDocenteEePrograma = problematicaAcademica.getIdDocenteEePrograma();
         int cantidadTutorados = problematicaAcademica.getCantidadTutorados();
-        String query = "INSERT INTO tutoriasproblematicasacademicas (Titulo, Descripcion, cantidadTutorados, IdDocentesEEProgramas) "
-                + "VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO tutoriasproblematicasacademicas (Titulo, Descripcion, cantidadTutorados, IdDocentesEEProgramas) VALUES (?, ?, ?, ?)";
         if(titulo.length() < 100 && descripcion.length() < 500 && cantidadTutorados > 0 && idDocenteEePrograma > 0){
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, titulo);

@@ -56,7 +56,7 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
     }
 
     @Override
-    public void eliminarReporteIncompleto(int idSesion) throws SQLException{
+    public int eliminarReporteIncompleto(int idSesion) throws SQLException{
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         int filasEliminadas = 0;
         Connection connection = dataBaseConnection.getConnection();
@@ -64,6 +64,7 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, idSesion);
         filasEliminadas = statement.executeUpdate();
+        return filasEliminadas;
     }
 
     @Override
@@ -89,8 +90,7 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
         int idReporteNuevo = 0;
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         Connection connection = dataBaseConnection.getConnection();
-        String query = ("SELECT idSesion FROM sesion " +
-                "WHERE IdProgramaEducativo = ? AND IdTutoria = ? AND cuentauv = ?");
+        String query = ("SELECT idSesion FROM sesion WHERE IdProgramaEducativo = ? AND IdTutoria = ? AND cuentauv = ?");
         PreparedStatement statement = connection.prepareStatement(query);
         int idProgramaEducativo = reporteBuscado.getIdProgramaEducativo();
         String cuentauv = reporteBuscado.getCuentaUv();

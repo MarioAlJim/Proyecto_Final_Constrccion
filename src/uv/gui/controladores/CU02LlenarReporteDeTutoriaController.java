@@ -111,14 +111,18 @@ public class CU02LlenarReporteDeTutoriaController implements Initializable {
         } catch (ParseException exception) {
             log.fatal(exception);
         }
-        mostrarFechasDeTutoria(sesionTutoriaActiva);
-        generaNuevoReporte();
+        if (sesionTutoriaActiva != null){
+            mostrarFechasDeTutoria(sesionTutoriaActiva);
+            generaNuevoReporte();
+        } else {
+            cerrarVentanaAux();
+        }
     }
 
     private void generaNuevoReporte() {
         try {
             reporteTutorNuevo.setIdTutoria(sesionTutoriaActiva.getIdSesionTutoria());
-            reporteTutorNuevo.setIdProgramaEducativo(2 /*programaEducativoActivo.getIdProgramaEducativo()*/);
+            reporteTutorNuevo.setIdProgramaEducativo(programaEducativoActivo.getIdProgramaEducativo());
             reporteTutorNuevo.setCuentaUv(usuarioActivo.getCuentaUV());
 
             ReporteTutorDAO reporteTutorDAO = new ReporteTutorDAO();
@@ -206,5 +210,11 @@ public class CU02LlenarReporteDeTutoriaController implements Initializable {
         stageMenuTutor.alwaysOnTopProperty();
         stageMenuTutor.initModality(Modality.APPLICATION_MODAL);
         stageMenuTutor.show();
-    }   
+    }
+
+    private void cerrarVentanaAux() {
+        Stage stageActual = (Stage) txtTutoria.getScene().getWindow();
+        Stage stage = (Stage) stageActual.getScene().getWindow();
+        stage.close();
+    }
 }

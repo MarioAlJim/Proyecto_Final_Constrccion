@@ -88,10 +88,7 @@ public class InicioSesionGUIController implements Initializable {
         stageMenuTutor.alwaysOnTopProperty();
         stageMenuTutor.initModality(Modality.APPLICATION_MODAL);
         stageMenuTutor.show();
-
-        Stage stageActual = (Stage)lblUsuario.getScene().getWindow();
-        Stage stage = (Stage) stageActual.getScene().getWindow();
-        stage.close();
+        cerrarVentanaAux();
     }
 
     private void mostrarMenuAdministrador() throws IOException{
@@ -104,10 +101,7 @@ public class InicioSesionGUIController implements Initializable {
         stageMenuTutor.alwaysOnTopProperty();
         stageMenuTutor.initModality(Modality.APPLICATION_MODAL);
         stageMenuTutor.show();
-
-        Stage stageActual = (Stage)lblUsuario.getScene().getWindow();
-        Stage stage = (Stage) stageActual.getScene().getWindow();
-        stage.close();
+        cerrarVentanaAux();
     }
 
     private void mostrarMenuCoordinaro(Usuario usuarioRecuperado) throws IOException{
@@ -122,10 +116,6 @@ public class InicioSesionGUIController implements Initializable {
         stageMenuTutor.alwaysOnTopProperty();
         stageMenuTutor.initModality(Modality.APPLICATION_MODAL);
         stageMenuTutor.show();
-
-        Stage stageActual = (Stage)lblUsuario.getScene().getWindow();
-        Stage stage = (Stage) stageActual.getScene().getWindow();
-        stage.close();
     }
 
     private void mostrarMenuJefedeCarrera(Usuario usuarioRecuperado) throws IOException {
@@ -140,10 +130,7 @@ public class InicioSesionGUIController implements Initializable {
         stageMenuTutor.alwaysOnTopProperty();
         stageMenuTutor.initModality(Modality.APPLICATION_MODAL);
         stageMenuTutor.show();
-
-        Stage stageActual = (Stage)lblUsuario.getScene().getWindow();
-        Stage stage = (Stage) stageActual.getScene().getWindow();
-        stage.close();
+        cerrarVentanaAux();
     }
 
     @Override
@@ -175,5 +162,11 @@ public class InicioSesionGUIController implements Initializable {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
-    
+
+    private void cerrarVentanaAux(){
+        Stage stageActual = (Stage)lblUsuario.getScene().getWindow();
+        Stage stage = (Stage) stageActual.getScene().getWindow();
+        stage.close();
+
+    }
 }
