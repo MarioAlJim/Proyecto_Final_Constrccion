@@ -7,7 +7,7 @@ import uv.fei.tutorias.domain.Tutor;
 
     public interface ITutorDAO {
         
-        public ArrayList<Tutor> consultarTodoslosTutoresPorProgramaEducativo(int idProgramaEducativo);
+        public ArrayList<Tutor> consultarTodoslosTutoresPorProgramaEducativo(int idProgramaEducativo) throws SQLException;
 
         public int registrarTutor(Tutor tutor) throws SQLException;
 

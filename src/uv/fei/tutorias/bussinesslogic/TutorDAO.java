@@ -18,42 +18,41 @@ public class TutorDAO implements ITutorDAO{
 final static Logger log = Logger.getLogger(TutorDAO.class);
 
     @Override
-    public ArrayList<Tutor> consultarTodoslosTutoresPorProgramaEducativo(int idProgramaEducativo) {
+    public ArrayList<Tutor> consultarTodoslosTutoresPorProgramaEducativo(int idProgramaEducativo) throws SQLException {
         ArrayList<Tutor> tutores = new ArrayList<>();
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        try(Connection connection=dataBaseConnection.getConnection()){
+        Connection connection=dataBaseConnection.getConnection();
             String query="SELECT U.* FROM usuarios U " +
                     "INNER JOIN usuariosroles UR on UR.CuentaUV = U.CuentaUV  " +
                     "INNER JOIN usuariosprogramas UP on UP.CuentaUV = U.CuentaUV  " +
                     "INNER JOIN roles R on R.IdRol = UR.IdRol  " +
                     "WHERE R.Descripcion = 'Tutor' AND UP.IdProgramaEducativo = ?";
             PreparedStatement statement=connection.prepareStatement(query);
-            statement.setInt(1, idProgramaEducativo);
-            ResultSet resultSet=statement.executeQuery();
-            if (resultSet.next()){
-                String cuentaUV;
-                String nombre;
-                String apellidoPaterno;
-                String apellidoMaterno;
-                String correo;
-                do {
-                    cuentaUV = resultSet.getString("CuentaUV");
-                    nombre = resultSet.getString("Nombre");
-                    apellidoPaterno = resultSet.getString("ApellidoPaterno");
-                    apellidoMaterno = resultSet.getString("ApellidoMaterno");
-                    correo = resultSet.getString("Correo");
-                    Tutor tutor = new Tutor();
-                    tutor.setCuentaUV(cuentaUV);
-                    tutor.setNombre(nombre);
-                    tutor.setApellidoPaterno(apellidoPaterno);
-                    tutor.setApellidoMaterno(apellidoMaterno);
-                    tutor.setCorreo(correo);
-                    tutores.add(tutor);
-                }while (resultSet.next());
+            if (idProgramaEducativo > 0) {
+                statement.setInt(1, idProgramaEducativo);
+                ResultSet resultSet=statement.executeQuery();
+                if (resultSet.next()){
+                    String cuentaUV;
+                    String nombre;
+                    String apellidoPaterno;
+                    String apellidoMaterno;
+                    String correo;
+                    do {
+                        cuentaUV = resultSet.getString("CuentaUV");
+                        nombre = resultSet.getString("Nombre");
+                        apellidoPaterno = resultSet.getString("ApellidoPaterno");
+                        apellidoMaterno = resultSet.getString("ApellidoMaterno");
+                        correo = resultSet.getString("Correo");
+                        Tutor tutor = new Tutor();
+                        tutor.setCuentaUV(cuentaUV);
+                        tutor.setNombre(nombre);
+                        tutor.setApellidoPaterno(apellidoPaterno);
+                        tutor.setApellidoMaterno(apellidoMaterno);
+                        tutor.setCorreo(correo);
+                        tutores.add(tutor);
+                    }while (resultSet.next());
+                }
             }
-        } catch (SQLException ex) {
-           log.fatal(ex);
-        }
         return tutores;
     }
     

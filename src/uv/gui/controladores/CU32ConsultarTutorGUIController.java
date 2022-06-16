@@ -1,6 +1,7 @@
 package uv.gui.controladores;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import uv.fei.tutorias.bussinesslogic.TutoradoDAO;
 import uv.fei.tutorias.bussinesslogic.TutorDAO;
 import uv.fei.tutorias.domain.*;
@@ -56,6 +58,7 @@ public class CU32ConsultarTutorGUIController implements Initializable {
     Usuario usuarioActivo;
     ProgramaEducativo programaEducativoActivo;
     Alertas alertas = new Alertas();
+    final static Logger log = Logger.getLogger(CU32ConsultarTutorGUIController.class);
 
     public void recibirParametros(Usuario usuario, ProgramaEducativo programaEducativo) {
         usuarioActivo = usuario;
@@ -69,16 +72,21 @@ public class CU32ConsultarTutorGUIController implements Initializable {
         colApellidoMaterno.setCellValueFactory(new PropertyValueFactory<DocenteEEPrograma, String>("apellidoMaterno"));
         TutorDAO tutorDAO = new TutorDAO();
         ArrayList<Tutor> tutores;
-        tutores = tutorDAO.consultarTodoslosTutoresPorProgramaEducativo(programaEducativoActivo.getIdProgramaEducativo());
-        ObservableList<Tutor> tutoresObservableList = FXCollections.observableArrayList();
-        if (!tutores.isEmpty()) {
-            for (Tutor tutores1 : tutores) {
-                tutoresObservableList.add(tutores1);
+        try {
+            tutores = tutorDAO.consultarTodoslosTutoresPorProgramaEducativo(programaEducativoActivo.getIdProgramaEducativo());
+            ObservableList<Tutor> tutoresObservableList = FXCollections.observableArrayList();
+            if (!tutores.isEmpty()) {
+                for (Tutor tutores1 : tutores) {
+                    tutoresObservableList.add(tutores1);
+                }
+            } else {
+                alertas.mostrarAlertaSinTutores();
             }
-        } else {
-            alertas.mostrarAlertaSinTutores();
+            tblTutores.setItems(tutoresObservableList);
+        } catch (SQLException exception) {
+            alertas.mostrarAlertaErrorConexionDB();
+            log.fatal(exception);
         }
-        tblTutores.setItems(tutoresObservableList);
     }
 
     private final ListChangeListener<Tutor> selectorTablaTutores = new ListChangeListener<Tutor>() {
