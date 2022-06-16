@@ -72,41 +72,45 @@ public class CU06ConsultarProblematicasAcademicasController implements Initializ
 
     ProgramaEducativo programaEducativo;
     Usuario usuarioActivo;
+    Alertas alertas = new Alertas();
     final static Logger log = Logger.getLogger(CU06ConsultarProblematicasAcademicasController.class);
 
-    public void recibirParametros(Usuario usuarioRecibido, ProgramaEducativo programaRecibido) throws SQLException {
+    public void recibirParametros(Usuario usuarioRecibido, ProgramaEducativo programaRecibido) {
         usuarioActivo = usuarioRecibido;
         programaEducativo = programaRecibido;
         establecerListaProblematicas();
     }
 
-    private void establecerListaProblematicas() throws SQLException {
+    private void establecerListaProblematicas() {
         colIdProblematica.setCellValueFactory(new PropertyValueFactory<ProblematicaReporte, String>("idProblematicaAcademica"));
         colExperiencia.setCellValueFactory(new PropertyValueFactory<ProblematicaReporte, String>("experiencia"));
         colFecha.setCellValueFactory(new PropertyValueFactory<ProblematicaReporte, String>("fecha"));
         colTitulo.setCellValueFactory(new PropertyValueFactory<ProblematicaReporte, String>("titulo"));
         ArrayList<ProblematicaReporte> problematicaReportes;
         ProblematicaAcademicaDAO problematicaAcademicaDAO = new ProblematicaAcademicaDAO();
-        problematicaReportes = problematicaAcademicaDAO.consultarTodasLasProblematicasPorProgramaEducativoCuenta(programaEducativo.getIdProgramaEducativo(), usuarioActivo.getCuentaUV());
-        ObservableList<ProblematicaReporte> problematicaAcademicaObservableList = FXCollections.observableArrayList();
-        if(!problematicaReportes.isEmpty()) {
-            for (ProblematicaReporte problematicaReporte : problematicaReportes) {
-                problematicaAcademicaObservableList.add(problematicaReporte);
+        try {
+            problematicaReportes = problematicaAcademicaDAO.consultarTodasLasProblematicasPorProgramaEducativoCuenta(programaEducativo.getIdProgramaEducativo(), usuarioActivo.getCuentaUV());
+            ObservableList<ProblematicaReporte> problematicaAcademicaObservableList = FXCollections.observableArrayList();
+            if (!problematicaReportes.isEmpty()) {
+                for (ProblematicaReporte problematicaReporte : problematicaReportes) {
+                    problematicaAcademicaObservableList.add(problematicaReporte);
+                }
+            } else {
+                alertas.mostrarAlertarSinProblematicas();
             }
-        }else {
-            Alertas alertas = new Alertas();
-            alertas.mostrarAlertarSinProblematicas();
+            tblProblematicas.setItems(problematicaAcademicaObservableList);
+        } catch(SQLException exception) {
+            log.info(exception);
         }
-        tblProblematicas.setItems(problematicaAcademicaObservableList);
     }
 
     private final ListChangeListener<ProblematicaReporte> selectorTablaProblematicas = new ListChangeListener<ProblematicaReporte>() {
         @Override
         public void onChanged(ListChangeListener.Change<? extends ProblematicaReporte> c) {
-            mostraDatosProblematica();
+            mostrarDatosProblematica();
         }
     };
-    public ProblematicaReporte getTablaProblematicaSeleccionada() {
+    public ProblematicaReporte obtenerProblematica() {
         ProblematicaReporte problematicaReporte = new ProblematicaReporte();
         if (tblProblematicas != null) {
             List<ProblematicaReporte> tabla = tblProblematicas.getSelectionModel().getSelectedItems();
@@ -117,9 +121,9 @@ public class CU06ConsultarProblematicasAcademicasController implements Initializ
         return problematicaReporte;
     }
 
-    private void mostraDatosProblematica() {
-        datosProblematicaVisibles();
-        ProblematicaReporte problematicaReporte = getTablaProblematicaSeleccionada();
+    private void mostrarDatosProblematica() {
+        cambiarVisibilidadElementos();
+        ProblematicaReporte problematicaReporte = obtenerProblematica();
         String cantidadAlumnos = String.valueOf(problematicaReporte.getCantidadTutorados());
         String descripcion = problematicaReporte.getDescripcion();
         String titulo = problematicaReporte.getTitulo();
@@ -132,7 +136,7 @@ public class CU06ConsultarProblematicasAcademicasController implements Initializ
         txtExperiencia.setText(experiencia);
     }
 
-    private void datosProblematicaVisibles() {
+    private void cambiarVisibilidadElementos() {
         tblProblematicas.setVisible(false);
         btnCerrar.setVisible(false);
         lblSugerencia.setVisible(false);

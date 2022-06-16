@@ -17,10 +17,10 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
     final static Logger log = Logger.getLogger(CU06ConsultarProblematicasAcademicasController.class);
 
     @Override
-    public ArrayList<ProblematicaReporte> consultarTodasLasProblematicasPorProgramaEducativoCuenta(int idProgramaEducativo, String cuentaUv) {
+    public ArrayList<ProblematicaReporte> consultarTodasLasProblematicasPorProgramaEducativoCuenta(int idProgramaEducativo, String cuentaUv) throws SQLException {
         ArrayList<ProblematicaReporte> problematicasAcademicas = new ArrayList<>();
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        try(Connection connection = dataBaseConnection.getConnection()){
+        Connection connection = dataBaseConnection.getConnection();
         String query = (" SELECT tpa.*, t.FechaTutoria, d.Nombre Docente, ed.Nombre Experiencia FROM tutoriasproblematicasacademicas tpa " +
                 "INNER JOIN tutoriasproblematicassesiones tps on tps.idproblemaacademica = tpa.IdProblemaAcademica  " +
                 "INNER JOIN sesion s on s.idSesion = tps.idsesion  " +
@@ -60,9 +60,6 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
                 problematicaAcademica.setCantidadTutorados(cantidadTutorados);
                 problematicasAcademicas.add(problematicaAcademica);
             } while (resultSet.next());
-        }
-        }catch(SQLException exception){
-            log.fatal(exception);
         }
         return problematicasAcademicas;
     }
