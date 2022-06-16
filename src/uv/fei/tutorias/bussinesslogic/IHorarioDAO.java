@@ -13,7 +13,7 @@ public interface IHorarioDAO {
 
     public int actualizarHorario(Horario horario);
 
-    public int eliminarHorario(int idHorario);
+    public ArrayList<Horario> obtenerTutoradosParaRegistrodeHorario(String cuentaUV, int idProgramaEducativo);
 
 }
 

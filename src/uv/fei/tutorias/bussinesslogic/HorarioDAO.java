@@ -64,12 +64,14 @@ public class HorarioDAO implements IHorarioDAO {
             int idProgramaEducativo = horario.getIdProgramaEducativo();
             String query = "INSERT INTO horario (HoraInicio, IdTutoria, Matricula, cuentauv, IdProgramaEducativo) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, hora);
-            statement.setInt(2, idTutoria);
-            statement.setString(3, matricula);
-            statement.setString(4, cuentauv);
-            statement.setInt(5, idProgramaEducativo);
-            filasInsertadas = statement.executeUpdate();
+            if (idTutoria > 0 && hora.length() < 6 && !hora.isEmpty() && !matricula.isEmpty() && matricula.length() < 10 && cuentauv.length() < 50 && !cuentauv.isEmpty()) {
+                statement.setString(1, hora);
+                statement.setInt(2, idTutoria);
+                statement.setString(3, matricula);
+                statement.setString(4, cuentauv);
+                statement.setInt(5, idProgramaEducativo);
+                filasInsertadas = statement.executeUpdate();
+            }
         } catch (SQLException ex) {
             log.error(ex);
         }
@@ -83,12 +85,13 @@ public class HorarioDAO implements IHorarioDAO {
         try(Connection connection=dataBaseConnection.getConnection()){
             int idHorario = horario.getIdHorario();
             String hora = horario.getHora();
-            String query =
-                    ("UPDATE horario SET HoraInicio = ? WHERE IdHorario = ?");
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, hora);
-            statement.setInt(2, idHorario);
-            filasActualizadas = statement.executeUpdate();
+            String query = "UPDATE horario SET HoraInicio = ? WHERE IdHorario = ?";
+            if (idHorario > 0 && hora.length() < 6 && !hora.isEmpty()){
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, hora);
+                statement.setInt(2, idHorario);
+                filasActualizadas = statement.executeUpdate();
+            }
         } catch (SQLException ex) {
             log.fatal(ex);
         }
@@ -96,22 +99,6 @@ public class HorarioDAO implements IHorarioDAO {
     }
 
     @Override
-    public int eliminarHorario(int idHorario) {
-        DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        int filasEliminadas = 0;
-        try(Connection connection=dataBaseConnection.getConnection()){
-            String query = "DELETE FROM horario WHERE IdHorario = ?";
-            PreparedStatement statement=connection.prepareStatement(query);
-            statement.setInt(1, idHorario);
-            filasEliminadas = statement.executeUpdate();
-            System.out.println(filasEliminadas + " Fila eiminada");
-        } catch (SQLException ex) {
-            log.error(ex);
-        }
-        return filasEliminadas;
-    }
-
-
     public ArrayList<Horario> obtenerTutoradosParaRegistrodeHorario(String cuentaUV, int idProgramaEducativo){
         ArrayList<Horario> tutoradosHorario = new ArrayList<>();
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
