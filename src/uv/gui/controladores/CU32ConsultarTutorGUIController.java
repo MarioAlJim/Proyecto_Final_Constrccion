@@ -83,7 +83,7 @@ public class CU32ConsultarTutorGUIController implements Initializable {
                     mostrarDatosTutor();
                 }
             };
-    public Tutor getTablaTutorSeleccionado() {
+    public Tutor obtenerTutorSeleccionado() {
         Tutor tutorSeleccionado = new Tutor();
         if (tblTutores != null) {
             List<Tutor> tabla = tblTutores.getSelectionModel().getSelectedItems();
@@ -95,13 +95,11 @@ public class CU32ConsultarTutorGUIController implements Initializable {
     }
 
     private void mostrarDatosTutor() {
-        Tutor tutor = getTablaTutorSeleccionado();
+        Tutor tutor = obtenerTutorSeleccionado();
         colMatriculaTutorado.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("matricula"));
         colNombreTutorado.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("nombre"));
         colApellidoPaternoTutorado.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("apellidoPaterno"));
         colApellidoMaternoTutorado.setCellValueFactory(new PropertyValueFactory <Tutorado, String>("apellidoMaterno"));
-
-        if (tutor != null) {
             String nombre = (tutor.getNombre() + " " + tutor.getApellidoPaterno() + " " + tutor.getApellidoMaterno());
             lblNombre.setText(nombre);
             lblCorreo.setText(tutor.getCorreo());
@@ -126,7 +124,6 @@ public class CU32ConsultarTutorGUIController implements Initializable {
             tblTutores.setVisible(false);
             idTitulo.setVisible(false);
             btnCerrarVentana.setVisible(false);
-        }
     }
     
     

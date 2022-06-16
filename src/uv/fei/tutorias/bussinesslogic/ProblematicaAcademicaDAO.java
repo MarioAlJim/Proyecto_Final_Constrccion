@@ -26,36 +26,37 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
                 "INNER JOIN docentes d on d.NumPersonal = deep.NumPersonal " +
                 "WHERE s.IdProgramaEducativo = ? AND s.cuentauv = ?;");
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, idProgramaEducativo);
-        statement.setString(2, cuentaUv);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            int idProblematicaAcademica;
-            String titulo;
-            String experiencia;
-            String fecha;
-            String descripcion;
-            String docente;
-            int cantidadTutorados;
-            do {
-                idProblematicaAcademica = resultSet.getInt("IdProblemaAcademica");
-                titulo = resultSet.getString("Titulo");
-                fecha = resultSet.getString("FechaTutoria");
-                experiencia = resultSet.getString("Experiencia");
-                descripcion = resultSet.getString("Descripcion");
-                experiencia = resultSet.getString("Experiencia");
-                docente = resultSet.getString("Docente");
-                cantidadTutorados = resultSet.getInt("cantidadTutorados");
-                ProblematicaReporte problematicaAcademica = new ProblematicaReporte();
-                problematicaAcademica.setIdProblematicaAcademica(idProblematicaAcademica);
-                problematicaAcademica.setFecha(fecha);
-                problematicaAcademica.setExperiencia(experiencia);
-                problematicaAcademica.setTitulo(titulo);
-                problematicaAcademica.setDescripcion(descripcion);
-                problematicaAcademica.setNombreDocente(docente);
-                problematicaAcademica.setCantidadTutorados(cantidadTutorados);
-                problematicasAcademicas.add(problematicaAcademica);
-            } while (resultSet.next());
+        if (idProgramaEducativo > 0 && !cuentaUv.isEmpty() && cuentaUv.length() < 51) {
+            statement.setInt(1, idProgramaEducativo);
+            statement.setString(2, cuentaUv);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int idProblematicaAcademica;
+                String titulo;
+                String experiencia;
+                String fecha;
+                String descripcion;
+                String docente;
+                int cantidadTutorados;
+                do {
+                    idProblematicaAcademica = resultSet.getInt("IdProblemaAcademica");
+                    titulo = resultSet.getString("Titulo");
+                    fecha = resultSet.getString("FechaTutoria");
+                    experiencia = resultSet.getString("Experiencia");
+                    descripcion = resultSet.getString("Descripcion");
+                    docente = resultSet.getString("Docente");
+                    cantidadTutorados = resultSet.getInt("cantidadTutorados");
+                    ProblematicaReporte problematicaAcademica = new ProblematicaReporte();
+                    problematicaAcademica.setIdProblematicaAcademica(idProblematicaAcademica);
+                    problematicaAcademica.setFecha(fecha);
+                    problematicaAcademica.setExperiencia(experiencia);
+                    problematicaAcademica.setTitulo(titulo);
+                    problematicaAcademica.setDescripcion(descripcion);
+                    problematicaAcademica.setNombreDocente(docente);
+                    problematicaAcademica.setCantidadTutorados(cantidadTutorados);
+                    problematicasAcademicas.add(problematicaAcademica);
+                } while (resultSet.next());
+            }
         }
         return problematicasAcademicas;
     }
