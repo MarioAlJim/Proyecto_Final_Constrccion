@@ -67,7 +67,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
             cbbDocente.setItems(docentesObservableList);
             cbbDocente.valueProperty().addListener((ov, valorAntiguo, valorNuevo) -> {
                 docenteSeleccionado = (Docente) valorNuevo;
-                    establecerExperiencias(docenteSeleccionado.getNumPersonal());
+                establecerExperienciasEducativas(docenteSeleccionado.getNumPersonal());
             });
         } catch (SQLException exception){
             alertas.mostrarAlertaErrorConexionDB();
@@ -75,7 +75,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
         }
     }
 
-    private void establecerExperiencias(int numPersonal) {
+    private void establecerExperienciasEducativas(int numPersonal) {
         ArrayList<ExperienciaEducativa> experienciasEducativas;
         ObservableList<ExperienciaEducativa> experienciaEducativaObservableList = FXCollections.observableArrayList();
         try {
