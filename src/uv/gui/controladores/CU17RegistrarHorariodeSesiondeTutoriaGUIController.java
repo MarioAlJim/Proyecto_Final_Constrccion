@@ -78,7 +78,7 @@ public class CU17RegistrarHorariodeSesiondeTutoriaGUIController implements Initi
     }
 
     private void establecerPeriodoFechasTutoria() {
-        Periodo periodo = new Periodo();
+        Periodo periodo;
         PeriodoDAO periodoDAO = new PeriodoDAO();
         try {
             periodo = periodoDAO.consultarPeriodoActivo();

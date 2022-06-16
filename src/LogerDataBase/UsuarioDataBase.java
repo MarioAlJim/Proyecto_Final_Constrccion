@@ -4,9 +4,8 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import LogerDataBase.*;
 
-public class ObtenerUsuarioDB {
+public class UsuarioDataBase {
 
     public UsuarioDB obtenerUsuario(){
         UsuarioDB usuarioDB = new UsuarioDB();

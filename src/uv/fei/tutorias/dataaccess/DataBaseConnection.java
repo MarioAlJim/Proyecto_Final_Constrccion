@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import LogerDataBase.UsuarioDB;
-import LogerDataBase.ObtenerUsuarioDB;
+import LogerDataBase.UsuarioDataBase;
 
 public class DataBaseConnection {
     
     private Connection connection;
     private final String DB="jdbc:mysql://sistema-tutorias.mysql.database.azure.com:3306/sistematutoriasfei?useSSL=false";
     private UsuarioDB usuarioDB;
-    ObtenerUsuarioDB obtenerUsuarioDB = new ObtenerUsuarioDB();
+    UsuarioDataBase usuarioDataBase = new UsuarioDataBase();
 
     public Connection getConnection() throws SQLException{
         connect();
@@ -21,7 +21,7 @@ public class DataBaseConnection {
     }
 
     private void connect() throws SQLException{
-        usuarioDB = obtenerUsuarioDB.obtenerUsuario();
+        usuarioDB = usuarioDataBase.obtenerUsuario();
         connection=DriverManager.getConnection(DB,usuarioDB.getUser(),usuarioDB.getPassword());
     }
 
