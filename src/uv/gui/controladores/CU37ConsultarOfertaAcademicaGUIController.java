@@ -24,6 +24,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import uv.mensajes.Alertas;
 
 
 public class CU37ConsultarOfertaAcademicaGUIController implements Initializable {
@@ -45,6 +46,7 @@ public class CU37ConsultarOfertaAcademicaGUIController implements Initializable 
     @FXML
     private Label lblMensajeError;
 
+    Alertas alertas = new Alertas();
     final static Logger log = Logger.getLogger(CU37ConsultarOfertaAcademicaGUIController.class);
 
     private void inicializarTablaOfertaAcademica() {
@@ -56,12 +58,14 @@ public class CU37ConsultarOfertaAcademicaGUIController implements Initializable 
         DocenteEEProgramasDAO docenteEEProgramasDAO = new DocenteEEProgramasDAO();
         ArrayList<DocenteEEPrograma> docentesEEProgramasDAO;
         docentesEEProgramasDAO = docenteEEProgramasDAO.obtenerOfertaAcademicaGeneral();
-
         ObservableList<DocenteEEPrograma> ofertaAcademicaTabla = FXCollections.observableArrayList();
-        for (DocenteEEPrograma docenteEEPrograma : docentesEEProgramasDAO) {
-            ofertaAcademicaTabla.add(docenteEEPrograma);
+        if (!docentesEEProgramasDAO.isEmpty()) {
+            for (DocenteEEPrograma docenteEEPrograma : docentesEEProgramasDAO) {
+                ofertaAcademicaTabla.add(docenteEEPrograma);
+            }
+        } else {
+            alertas.mostrarAlertarNoHayOfertaAcademicaRegistrada();
         }
-        
         tblOfertaAcademica.setItems(ofertaAcademicaTabla);
     }
     
@@ -116,7 +120,6 @@ public class CU37ConsultarOfertaAcademicaGUIController implements Initializable 
         });
     }
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.inicializarTablaOfertaAcademica();
@@ -128,7 +131,6 @@ public class CU37ConsultarOfertaAcademicaGUIController implements Initializable 
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-
     }
     
 }

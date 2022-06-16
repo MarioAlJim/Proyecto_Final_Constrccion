@@ -1,7 +1,5 @@
 package uv.fei.tutorias.bussinesslogic;
 
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +9,6 @@ import java.util.List;
 import uv.fei.tutorias.dataaccess.DataBaseConnection;
 import uv.fei.tutorias.domain.Tutor;
 import org.apache.log4j.Logger;
-
 
 public class TutorDAO implements ITutorDAO{
 

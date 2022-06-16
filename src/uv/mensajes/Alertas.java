@@ -130,4 +130,11 @@ public class Alertas {
         alert.setContentText("Actualmente no hay ningna fecha de tutoria activa, por favor cantacte con su respectivo coordinador de tutorias");
         alert.showAndWait();
     }
+
+    public void mostrarAlertarNoHayOfertaAcademicaRegistrada() {
+        alert.setTitle("Informacion");
+        alert.setHeaderText("No registrada");
+        alert.setContentText("Aun no se registra oferta academica");
+        alert.showAndWait();
+    }
 }
