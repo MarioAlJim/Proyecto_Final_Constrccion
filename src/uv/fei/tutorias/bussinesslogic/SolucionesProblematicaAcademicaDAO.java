@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package uv.fei.tutorias.bussinesslogic;
 
 import java.sql.Connection;
@@ -9,65 +5,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import uv.fei.tutorias.dataaccess.DataBaseConnection;
-import uv.fei.tutorias.domain.ProblematicaAcademica;
 import org.apache.log4j.Logger;
 import uv.fei.tutorias.domain.Problematica;
 
-
-/**
- *
- * @author Valea
- */
 public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblematicaAcademicaDAO{
-    
-    final static Logger log = Logger.getLogger( SolucionesProblematicaAcademicaDAO.class);
-    
-    
-  
-    
-   /* @Override 
-    public int actualizarSolucionProblematica(ProblematicaAcademica problematicaAcademica) {
-        DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        int filasActualizadas = 0;
-        try(Connection connection=dataBaseConnection.getConnection()){
-            int idProblematicaAcademica = problematicaAcademica.getIdProblematicaAcademica();
-            
-            String solucion = problematicaAcademica.getSolucion();
-            
-            String query;
-            query = 
-                    ("UPDATE tutoriasproblematicasacademicas SET solucion = '" + solucion +
-                     " WHERE IdProblemaAcademica = " + idProblematicaAcademica);
-            PreparedStatement statement = connection.prepareStatement(query);
-            filasActualizadas = statement.executeUpdate();
-            System.out.println(filasActualizadas + " filas modificadas");
-        } catch (SQLException ex) {
-                log.fatal(ex);
-                
-        }
-        return filasActualizadas;
-    } */    
 
     @Override
     public int registrarSolucion(String solucion, int idProblematicaA)throws SQLException {
-         DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
         int filasInsertadas = 0;
         Connection connection=dataBaseConnection.getConnection();
-            int idProblematicaAcademica = idProblematicaA;
-            //String Solucion = solucion;
+        int idProblematicaAcademica = idProblematicaA;
+        String Solucion = solucion;
+        if(!Solucion.isEmpty() && !Solucion.trim().isEmpty() ){
             String query =
-               
-                   ("UPDATE tutoriasproblematicasacademicas SET solucion= ?  WHERE IdProblemaAcademica = ?"  );
-            
+                    ("UPDATE tutoriasproblematicasacademicas SET solucion= ? WHERE IdProblemaAcademica = ?" );
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1,solucion);
             statement.setInt(2,idProblematicaAcademica);
-            
             filasInsertadas = statement.executeUpdate();
             System.out.println(filasInsertadas + " Fila insertada ");
-        
+        }else{
+            filasInsertadas = 0;
+        }
         return filasInsertadas;
     }
 
@@ -76,7 +37,6 @@ public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblemati
         ArrayList<Problematica> problematicasAcademicas= new ArrayList<>();
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         Connection connection=dataBaseConnection.getConnection();
-            
             String query=(" select p.idproblemaacademica, p.titulo, p.solucion,p.descripcion, ee.nombre as experiencia , concat(d.nombre, ' ', d.ApellidoPaterno, ' ', d.ApellidoMaterno) as docente, pe.nombre as programa, t.fechatutoria, concat(periodo.fechainicio, ' - ', periodo.fechafin) as periodo "
                     + " from tutoriasproblematicassesiones ps "
                     + " inner join tutoriasproblematicasacademicas p on ps.idproblemaacademica=p.idproblemaacademica"
@@ -91,8 +51,6 @@ public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblemati
             statement.setInt(1,idProgramaEducativo);
             ResultSet resultSet=statement.executeQuery();
             if (resultSet.next()){
-                
-            
                 int idProblematicaAcademica;
                 String titulo;
                 String descripcion;
@@ -100,8 +58,7 @@ public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblemati
                 String experiencia;
                 String docente;
                 String programa;
-                String fechatutoria;  
-                
+                String fechatutoria;
                 do {
                     idProblematicaAcademica = resultSet.getInt("IdProblemaAcademica");
                     titulo = resultSet.getString("titulo");
@@ -120,14 +77,10 @@ public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblemati
                     problematicaAcademica.setDocente(docente);
                     problematicaAcademica.setPrograma(programa);
                     problematicaAcademica.setFechatutoria(fechatutoria);
-                    
-                   
                     problematicasAcademicas.add(problematicaAcademica);
                 }while (resultSet.next());
             }
-       
         return problematicasAcademicas;
-        
     }
 
     @Override
@@ -136,7 +89,6 @@ public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblemati
          ArrayList<Problematica> problematicasAcademicas= new ArrayList<>();
          DataBaseConnection dataBaseConnection = new DataBaseConnection();
          Connection connection=dataBaseConnection.getConnection();
-            
             String query=("select p.idproblemaacademica, p.titulo, p.solucion,p.descripcion, ee.nombre as experiencia , concat(d.nombre, ' ', d.ApellidoPaterno, ' ', d.ApellidoMaterno) as docente, pe.nombre as programa, t.fechatutoria, concat(periodo.fechainicio, '-', periodo.fechafin) as periodo "
                     + " from tutoriasproblematicassesiones ps "
                     + " inner join tutoriasproblematicasacademicas p on ps.idproblemaacademica=p.idproblemaacademica"
@@ -147,13 +99,10 @@ public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblemati
                     + " inner join tutorias t on s.idtutoria=t.idtutoria"
                     + " inner join periodo on periodo.idperiodo=t.idperiodo"
                     + " inner join programaseducativos pe on s.idprogramaeducativo=pe.idprogramaeducativo where p.solucion is not null and s.idprogramaeducativo=?;");
-            
             PreparedStatement statement=connection.prepareStatement(query);
             statement.setInt(1,idprogramaeducativo);
             ResultSet resultSet=statement.executeQuery();
-            if (resultSet.next()){
-                
-            
+            if (resultSet.next()) {
                 int idProblematicaAcademica;
                 String titulo;
                 String descripcion;
@@ -161,8 +110,7 @@ public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblemati
                 String experiencia;
                 String docente;
                 String programa;
-                String fechatutoria;  
-                
+                String fechatutoria;
                 do {
                     idProblematicaAcademica = resultSet.getInt("IdProblemaAcademica");
                     titulo = resultSet.getString("titulo");
@@ -181,18 +129,10 @@ public class SolucionesProblematicaAcademicaDAO implements ISolucionesProblemati
                     problematicaAcademica.setDocente(docente);
                     problematicaAcademica.setPrograma(programa);
                     problematicaAcademica.setFechatutoria(fechatutoria);
-                    
-                   
                     problematicasAcademicas.add(problematicaAcademica);
                 }while (resultSet.next());
             }
-       
         return problematicasAcademicas;
-        
     }
-    
 
-   
-
-    
 }
