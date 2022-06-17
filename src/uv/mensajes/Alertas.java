@@ -137,4 +137,16 @@ public class Alertas {
         alert.setContentText("Aun no se registra oferta academica");
         alert.showAndWait();
     }
+
+    public void mostrarAlertaNohayTutorados() {
+        alert.setTitle("No hay registros");
+        alert.setHeaderText("No se han encontrado tutorados");
+        alert.showAndWait();
+    }
+
+    public void mostrarAlertaNohayProblematicasRegistradasPorTutor() {
+        alert.setTitle("No hay registros");
+        alert.setHeaderText("No se registraon problematicas por parte del tutor");
+        alert.showAndWait();
+    }
 }

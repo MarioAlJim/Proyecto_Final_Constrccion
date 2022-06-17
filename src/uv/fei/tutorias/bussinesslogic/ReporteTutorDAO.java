@@ -125,7 +125,6 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
         return filasInsertadas;
     }
 
-
     @Override
     public ArrayList<ReporteTutor> consultarReportesTutor(int idProgramaEducativo) throws SQLException { // agregar variable de programa educativo
         ArrayList<ReporteTutor> reportestutores = new ArrayList<>();
@@ -163,7 +162,7 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
     }
 
     @Override
-    public ReporteTutor encabezadoReporte(int idsesion) throws SQLException {//vale
+    public ReporteTutor cargarEncabezadoReporte(int idsesion) throws SQLException {//vale
         ReporteTutor reportetutor = new ReporteTutor();
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         Connection connection = dataBaseConnection.getConnection();
@@ -198,7 +197,7 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
     }
 
     @Override
-    public ArrayList<Asistencia> listaAsistencia(int idsesion) throws SQLException { //vale
+    public ArrayList<Asistencia> cargarListaAsistencia(int idsesion) throws SQLException { //vale
         ArrayList<Asistencia> asistencias = new ArrayList<>();
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         Connection connection = dataBaseConnection.getConnection();
@@ -225,7 +224,7 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
     }
     
     @Override
-    public String comentariosGenerales(int idsesion) throws SQLException {
+    public String cargarComentariosGenerales(int idsesion) throws SQLException {
         String comentario = null;
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         Connection connection = dataBaseConnection.getConnection();
@@ -241,7 +240,7 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
     }
     
     @Override
-    public ArrayList<ProblematicaReporte> problematicasReportadas(int idsesion) throws SQLException {
+    public ArrayList<ProblematicaReporte> cargarProblematicasReportadas(int idsesion) throws SQLException {
         ArrayList<ProblematicaReporte> problematicas = new ArrayList<>();
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         Connection connection = dataBaseConnection.getConnection();

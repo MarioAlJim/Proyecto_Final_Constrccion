@@ -52,22 +52,17 @@ public class ReporteTutorDAOTest {
         expResult.setNumTutoria(1);
         expResult.setPeriodo(periodo);
         expResult.setProgramaeducativo(programaeducativo);
-        ReporteTutor result = instance.encabezadoReporte(idsesion);
+        ReporteTutor result = instance.cargarEncabezadoReporte(idsesion);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
-    /**
-     * Test of listaAsistencia method, of class ReporteTutorDAO.
-     */
     @Test
     public void testListaAsistencia() throws Exception {
         System.out.println("listaAsistencia");
         int idsesion = 3;
         ReporteTutorDAO instance = new ReporteTutorDAO();
         int  expResult = 4;
-        ArrayList<Asistencia> result = instance.listaAsistencia(idsesion);
+        ArrayList<Asistencia> result = instance.cargarListaAsistencia(idsesion);
         assertEquals(expResult, result.size());
         // TODO review the generated test code and remove the default call to fail.
         
@@ -82,7 +77,7 @@ public class ReporteTutorDAOTest {
         int idsesion = 3;
         ReporteTutorDAO instance = new ReporteTutorDAO();
         String expResult = "El esquema en línea es cansado para los estudiantes";
-        String result = instance.comentariosGenerales(idsesion);
+        String result = instance.cargarComentariosGenerales(idsesion);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
 
@@ -97,7 +92,7 @@ public class ReporteTutorDAOTest {
         int idsesion = 3;
         ReporteTutorDAO instance = new ReporteTutorDAO();
         int expResult = 3;
-        ArrayList<ProblematicaReporte> result = instance.problematicasReportadas(idsesion);
+        ArrayList<ProblematicaReporte> result = instance.cargarProblematicasReportadas(idsesion);
         assertEquals(expResult, result.size());
         // TODO review the generated test code and remove the default call to fail.
         

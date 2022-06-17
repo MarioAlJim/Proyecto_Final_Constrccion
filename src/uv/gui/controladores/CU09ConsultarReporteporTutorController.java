@@ -25,12 +25,8 @@ import uv.fei.tutorias.domain.Asistencia;
 import uv.fei.tutorias.domain.ExperienciaEducativa;
 import uv.fei.tutorias.domain.ProblematicaReporte;
 import uv.fei.tutorias.domain.ReporteTutor;
+import uv.mensajes.Alertas;
 
-/**
- * FXML Controller class
- *
- * @author Valea
- */
 public class CU09ConsultarReporteporTutorController implements Initializable {
 
     @FXML
@@ -63,17 +59,28 @@ public class CU09ConsultarReporteporTutorController implements Initializable {
     private Label lblIdsesion;
     @FXML
     private Label llave;
+    @FXML
+    private Button btnCerrar;
     
     final static Logger log = Logger.getLogger(CU09ConsultarReporteporTutorController.class); 
     int idsesion=0;
-    @FXML
-    private Button btnCerrar;
+    Alertas alertas = new Alertas();
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+    }
+
+    public void recibirParametros(int i) {
+        idsesion=i;
+        llave.setText(Integer.toString(idsesion));
+        cargarDatos();
+    }
     
     private void cargarEncabezado(){
         ReporteTutorDAO instance= new ReporteTutorDAO();
         ReporteTutor encabezado= new ReporteTutor();
         try {
-            encabezado=instance.encabezadoReporte(idsesion);
+            encabezado=instance.cargarEncabezadoReporte(idsesion);
         } catch (SQLException ex) {
             log.fatal(ex);
         }
@@ -84,13 +91,14 @@ public class CU09ConsultarReporteporTutorController implements Initializable {
             lblTutor.setText(encabezado.getNombreTutor());
         }
     }
+
     private void cargarListaAsistencia(){
         ReporteTutorDAO instance=new ReporteTutorDAO();
         ArrayList<Asistencia> asistencias= new ArrayList(); 
         try {
-            asistencias=instance.listaAsistencia(idsesion);
+            asistencias=instance.cargarListaAsistencia(idsesion);
         } catch (SQLException ex) {
-            avisoSinConexion();
+            alertas.mostrarAlertaErrorConexionDB();
             log.fatal(ex);
         }
 
@@ -107,20 +115,17 @@ public class CU09ConsultarReporteporTutorController implements Initializable {
               tblTutorados.setItems(tablaAsitencias); 
 
         }else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("No hay registros");
-            alert.setHeaderText("No se han encontrado tutorados");
-            alert.showAndWait();
-
+            alertas.mostrarAlertaNohayTutorados();
         }
     }
+
     private void cargarComentario(){
         ReporteTutorDAO instance=new ReporteTutorDAO();
         String comentario=null;
         try {
-            comentario= instance.comentariosGenerales(idsesion);
+            comentario= instance.cargarComentariosGenerales(idsesion);
         } catch (SQLException ex) {
-            avisoSinConexion();
+            alertas.mostrarAlertaErrorConexionDB();
         }
         if(comentario!=null){
             txtComentarios.setText(comentario);
@@ -129,66 +134,37 @@ public class CU09ConsultarReporteporTutorController implements Initializable {
         }
     
     }
+
     private void cargarProblematicas(){
         ReporteTutorDAO instance=new ReporteTutorDAO();
         ArrayList<ProblematicaReporte> problematicas= new ArrayList(); 
         try {
-            problematicas=instance.problematicasReportadas(idsesion);
+            problematicas=instance.cargarProblematicasReportadas(idsesion);
         } catch (SQLException ex) {
-            avisoSinConexion();
+            alertas.mostrarAlertaErrorConexionDB();
             log.fatal(ex);
         }
 
         if(!problematicas.isEmpty()){
-            //this.cEE.setCellValueFactory(new PropertyValueFactory("experiencia"));
             this.cEE.setCellValueFactory(new PropertyValueFactory("experiencia"));
             this.cDocente.setCellValueFactory(new PropertyValueFactory("NombreDocente"));
             this.cProblematica.setCellValueFactory(new PropertyValueFactory("titulo"));
             ObservableList<ProblematicaReporte> tablaProblematicas = FXCollections.observableArrayList() ;
-
              for (ProblematicaReporte problematica1 : problematicas){
                  tablaProblematicas.add(problematica1); 
              }
-
-              tblProblematicas.setItems(tablaProblematicas); 
-
+              tblProblematicas.setItems(tablaProblematicas);
         }else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("No hay registros");
-            alert.setHeaderText("No se registraon problematicas por parte del tutor");
-            alert.showAndWait();
-
+            alertas.mostrarAlertaNohayProblematicasRegistradasPorTutor();
         }
-    
     }
+
     private void cargarDatos(){
         this.cargarEncabezado();
         this.cargarListaAsistencia();
         this.cargarComentario();
         this.cargarProblematicas();
-    
     }
-    
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       
-        
-    }    
-
-    void recibirParametros(int i) {
-        idsesion=i;
-        llave.setText(Integer.toString(idsesion));
-        cargarDatos();
-    }
-    
-       private void avisoSinConexion(){
-           Alert alert = new Alert(Alert.AlertType.INFORMATION);
-           alert.setTitle("Sin conexión con la Base de Datos");
-           alert.setHeaderText("Intente más tarde. Por favor.");
-           alert.showAndWait();
-    
-    } 
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
