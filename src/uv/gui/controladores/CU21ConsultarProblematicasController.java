@@ -152,7 +152,7 @@ public class CU21ConsultarProblematicasController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
 
 
-            CU21RegistrarSoluciónAProblemáticaAcadémicaController controlador = (CU21RegistrarSoluciónAProblemáticaAcadémicaController) fxmlLoader.getController();
+            CU21RegistrarSolucionAProblematicaAcademicaController controlador = (CU21RegistrarSolucionAProblematicaAcademicaController) fxmlLoader.getController();
             controlador.recibirParametros(problematica);
 
             stage.showAndWait();

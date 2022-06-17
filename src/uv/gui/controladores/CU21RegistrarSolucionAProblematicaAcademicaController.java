@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,23 +15,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import uv.fei.tutorias.bussinesslogic.SolucionesProblematicaAcademicaDAO;
 import uv.fei.tutorias.domain.Problematica;
-import uv.fei.tutorias.domain.ProblematicaAcademica;
 
 /**
  * FXML Controller class
  *
  * @author Valea
  */
-public class CU21RegistrarSoluciónAProblemáticaAcadémicaController implements Initializable {
+public class CU21RegistrarSolucionAProblematicaAcademicaController implements Initializable {
 
     @FXML
     private TextArea txtSolucon;
@@ -54,7 +50,7 @@ public class CU21RegistrarSoluciónAProblemáticaAcadémicaController implements
     Problematica problematicaAcademico=null;
 
     
-    final static Logger log = Logger.getLogger(CU21RegistrarSoluciónAProblemáticaAcadémicaController.class); 
+    final static Logger log = Logger.getLogger(CU21RegistrarSolucionAProblematicaAcademicaController.class);
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
