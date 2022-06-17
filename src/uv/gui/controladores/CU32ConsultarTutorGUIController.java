@@ -85,7 +85,7 @@ public class CU32ConsultarTutorGUIController implements Initializable {
             tblTutores.setItems(tutoresObservableList);
         } catch (SQLException exception) {
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 

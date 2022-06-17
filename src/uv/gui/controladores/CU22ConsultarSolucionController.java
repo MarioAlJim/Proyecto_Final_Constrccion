@@ -71,7 +71,7 @@ public class CU22ConsultarSolucionController implements Initializable {
                }
            } catch (SQLException ex) {
                 avisoSinConexion();       
-                log.fatal(ex);
+                log.warn(ex);
            }
        } else {
             JOptionPane.showMessageDialog(null, "Campo de Solución vacio");

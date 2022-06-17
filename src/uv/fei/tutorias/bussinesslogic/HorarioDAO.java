@@ -47,7 +47,7 @@ public class HorarioDAO implements IHorarioDAO {
                 }
             }
         }catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return horarios;
     }
@@ -93,7 +93,7 @@ public class HorarioDAO implements IHorarioDAO {
                 filasActualizadas = statement.executeUpdate();
             }
         } catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return filasActualizadas;
     }
@@ -131,7 +131,7 @@ public class HorarioDAO implements IHorarioDAO {
                 }while (resultSet.next());
             }
         } catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return tutoradosHorario;
     }

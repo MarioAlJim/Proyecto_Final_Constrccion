@@ -71,7 +71,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
             });
         } catch (SQLException exception){
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 
@@ -94,7 +94,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
             });
         } catch (SQLException exception){
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 
@@ -165,7 +165,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
             }
         }catch (SQLException exception){
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 
@@ -176,7 +176,7 @@ public class CU03RegistrarProblematicaAcademicaGUIController implements Initiali
             idDocenteEE = docenteEEProgramasDAO.obtenerIdDocenteEEPrograma(docenteSeleccionado.getNumPersonal(), experienciaEducativaSeleccionada.getNrc());
         } catch (SQLException exception) {
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(exception);
+            log.warn(exception);
         }
         return idDocenteEE;
     }

@@ -49,7 +49,7 @@ public class TutoradoDAO implements ITutoradoDAO{
                 }while (resultSet.next());
             }
         } catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return tutorados;
     }
@@ -87,7 +87,7 @@ public class TutoradoDAO implements ITutoradoDAO{
                 }while (resultSet.next());
             }
         } catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return tutoradosAsistencia;
     }
@@ -125,7 +125,7 @@ public class TutoradoDAO implements ITutoradoDAO{
                 }while (resultSet.next());
             }
         }catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return tutoradosEncontrados;
     }
@@ -183,7 +183,7 @@ public class TutoradoDAO implements ITutoradoDAO{
                 }while (resultSet.next());
             }
         }catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return tutorados;
     }

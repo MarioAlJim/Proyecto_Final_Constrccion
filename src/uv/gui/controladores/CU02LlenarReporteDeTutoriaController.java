@@ -79,7 +79,7 @@ public class CU02LlenarReporteDeTutoriaController implements Initializable {
             obtenerTutoriaActiva(periodo);
         } catch (SQLException exception) {
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 
@@ -108,7 +108,7 @@ public class CU02LlenarReporteDeTutoriaController implements Initializable {
                 alertas.mostrarAlertaNoHayFechasDeTutoriaRegistradas();
             }
         } catch (ParseException exception) {
-            log.fatal(exception);
+            log.warn(exception);
         }
         if (sesionTutoriaActiva != null){
             mostrarFechasDeTutoria(sesionTutoriaActiva);
@@ -131,7 +131,7 @@ public class CU02LlenarReporteDeTutoriaController implements Initializable {
             idReporteNuevo = reporteTutorDAO.obtenerIdReporte(reporteTutorNuevo);
             reporteTutorNuevo.setIdsesion(idReporteNuevo);
         } catch (SQLException exception){
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 
@@ -184,7 +184,7 @@ public class CU02LlenarReporteDeTutoriaController implements Initializable {
         ReporteTutorDAO reporteTutorDAO = new ReporteTutorDAO();
         reporteTutorDAO.eliminarReporteIncompleto(reporteTutorNuevo.getIdsesion());
         } catch (SQLException exception){
-            log.fatal(exception);
+            log.warn(exception);
         }
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();

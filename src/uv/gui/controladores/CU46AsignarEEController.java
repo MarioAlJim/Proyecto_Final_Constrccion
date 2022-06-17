@@ -158,7 +158,7 @@ public class CU46AsignarEEController implements Initializable {
              }
           }catch (SQLException ex){
               this.avisoSinConexion();
-              log.fatal(ex);
+              log.warn(ex);
          }  
           
    }
@@ -190,7 +190,7 @@ public class CU46AsignarEEController implements Initializable {
              } 
         }catch(SQLException ex){
              this.avisoSinConexion();
-             log.fatal(ex);
+             log.warn(ex);
         }
    }
     private void cargarTablas(){
@@ -214,7 +214,7 @@ public class CU46AsignarEEController implements Initializable {
              cbbProgramaE.getSelectionModel().select(0);
          }
        }catch(SQLException ex){
-        log.fatal(ex);
+        log.warn(ex);
        }
     }
     
@@ -266,7 +266,7 @@ public class CU46AsignarEEController implements Initializable {
             JOptionPane.showMessageDialog(null, "Asignación realizada correctamente");
             }
        }catch(SQLException ex){
-           log.fatal(ex);
+           log.warn(ex);
            this.avisoSinConexion();
        }
        
@@ -303,7 +303,7 @@ public class CU46AsignarEEController implements Initializable {
             }
        }catch (SQLException ex) {
              this.avisoSinConexion(); 
-             log.fatal(ex);
+             log.warn(ex);
         } 
     }
     @FXML
@@ -336,7 +336,7 @@ public class CU46AsignarEEController implements Initializable {
             }
        }catch (SQLException ex) {
             this.avisoSinConexion();
-            log.fatal(ex);
+            log.warn(ex);
         } 
     }
 
@@ -374,7 +374,7 @@ public class CU46AsignarEEController implements Initializable {
            }
          }catch (SQLException ex) {
             this.avisoSinConexion();
-            log.fatal(ex);
+            log.warn(ex);
         } 
         
         

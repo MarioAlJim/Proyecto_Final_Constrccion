@@ -93,7 +93,7 @@ public class CU09ConsultarReportesporTutorController implements Initializable {
          }
         }catch (SQLException ex) {
             avisoSinConexion();
-            log.fatal(ex);
+            log.warn(ex);
         }
     }
       private final ListChangeListener<ReporteTutor> selectorTablaReporte=new ListChangeListener<ReporteTutor> (){
@@ -206,7 +206,7 @@ public class CU09ConsultarReportesporTutorController implements Initializable {
             }
          }catch (SQLException ex) { 
              //this.avisoSinConexion();
-             log.fatal(ex);
+             log.warn(ex);
          } 
        
     }

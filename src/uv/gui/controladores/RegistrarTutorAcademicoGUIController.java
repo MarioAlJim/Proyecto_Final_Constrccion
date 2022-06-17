@@ -83,7 +83,7 @@ public class RegistrarTutorAcademicoGUIController implements Initializable {
                     }
                 } catch (SQLException e) {
                     alertas.mostrarAlertaErrorConexionDB();
-                    log.fatal(e);
+                    log.warn(e);
             }
         }
     }

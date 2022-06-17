@@ -110,7 +110,7 @@ public class DocenteEEProgramasDAO implements IDocenteEEProgramasDAO {
                 }while (resultSet.next());
             }
         }catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return ofertaAcademicas;
     }
@@ -154,7 +154,7 @@ public class DocenteEEProgramasDAO implements IDocenteEEProgramasDAO {
                 }while (resultSet.next());
             }
         }catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return ofertaAcademicas;
     }

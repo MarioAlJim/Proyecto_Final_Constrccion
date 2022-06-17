@@ -82,7 +82,7 @@ public class CU09ConsultarReporteporTutorController implements Initializable {
         try {
             encabezado=instance.cargarEncabezadoReporte(idsesion);
         } catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         if (encabezado !=null){
             lblPeriodo.setText(encabezado.getPeriodo());
@@ -99,7 +99,7 @@ public class CU09ConsultarReporteporTutorController implements Initializable {
             asistencias=instance.cargarListaAsistencia(idsesion);
         } catch (SQLException ex) {
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(ex);
+            log.warn(ex);
         }
 
         if(!asistencias.isEmpty()){
@@ -142,7 +142,7 @@ public class CU09ConsultarReporteporTutorController implements Initializable {
             problematicas=instance.cargarProblematicasReportadas(idsesion);
         } catch (SQLException ex) {
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(ex);
+            log.warn(ex);
         }
 
         if(!problematicas.isEmpty()){

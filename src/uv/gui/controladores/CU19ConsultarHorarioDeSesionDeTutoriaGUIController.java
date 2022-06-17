@@ -88,7 +88,7 @@ public class CU19ConsultarHorarioDeSesionDeTutoriaGUIController implements Initi
                 }
             });
         }catch (SQLException exception){
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 

@@ -66,7 +66,7 @@ public class CU20ModificarHorarioDeSesionDeTutoriaGUIController implements Initi
             mostrarFechasDeTutoria(periodo);
         } catch (SQLException exception) {
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 

@@ -146,7 +146,7 @@ public class CU35AsignarTutorController implements Initializable {
         }
     }catch (SQLException ex) {
         this.avisoSinConexion();
-        log.fatal(ex);
+        log.warn(ex);
     }     
     }
     
@@ -173,7 +173,7 @@ public class CU35AsignarTutorController implements Initializable {
         }
        }catch (SQLException ex) {
              this.avisoSinConexion();
-             log.fatal(ex);
+             log.warn(ex);
      }
      }
       private void cargarTablas(){
@@ -240,7 +240,7 @@ public class CU35AsignarTutorController implements Initializable {
             
         }catch (SQLException ex) {
              this.avisoSinConexion();
-             log.fatal(ex);
+             log.warn(ex);
         }
         
     }
@@ -272,7 +272,7 @@ public class CU35AsignarTutorController implements Initializable {
             }
          }catch (SQLException ex) { 
              this.avisoSinConexion();
-             log.fatal(ex);
+             log.warn(ex);
          }
     }
 
@@ -304,7 +304,7 @@ public class CU35AsignarTutorController implements Initializable {
             }
         }catch (SQLException ex) {   
             this.avisoSinConexion();
-            log.fatal(ex);
+            log.warn(ex);
         }
     }
 

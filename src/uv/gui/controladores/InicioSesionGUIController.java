@@ -71,7 +71,7 @@ public class InicioSesionGUIController implements Initializable {
                 }
             }
         }catch (SQLException exception) {
-          log.fatal(exception);
+          log.warn(exception);
           alertas.mostrarAlertaErrorConexionDB();
         }              
     }

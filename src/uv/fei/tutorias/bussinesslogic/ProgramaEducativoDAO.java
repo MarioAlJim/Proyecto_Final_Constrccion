@@ -35,7 +35,7 @@ public class ProgramaEducativoDAO implements IProgramaEducativoDAO{
                 } while (resultSet.next());
             }
             }catch (SQLException exception){
-                log.fatal(exception);
+                log.warn(exception);
             }
         return programasEducativos;
     }
@@ -57,7 +57,7 @@ public class ProgramaEducativoDAO implements IProgramaEducativoDAO{
                 programaEducativo.setNombre(nombre);
             }
         }catch (SQLException exception) {
-            log.fatal(exception);
+            log.warn(exception);
         }
         return programaEducativo;
     }

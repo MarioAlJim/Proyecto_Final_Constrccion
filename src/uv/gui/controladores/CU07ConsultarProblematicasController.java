@@ -72,7 +72,7 @@ public class CU07ConsultarProblematicasController implements Initializable {
         try {
             this.establecerListaProblematicas();
         } catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
     }
 
@@ -155,7 +155,7 @@ public class CU07ConsultarProblematicasController implements Initializable {
             controlador.recibirParametros(problematica);
             stage.showAndWait();
         } catch (IOException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
     
     }
@@ -180,7 +180,7 @@ public class CU07ConsultarProblematicasController implements Initializable {
                     
                 } catch (SQLException ex) {
                     avisoSinConexion();
-                    log.fatal(ex);
+                    log.warn(ex);
                 }
             }
         

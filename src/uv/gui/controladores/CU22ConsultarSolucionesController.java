@@ -95,7 +95,7 @@ public class CU22ConsultarSolucionesController implements Initializable {
             
         } catch (SQLException ex) {
              avisoSinConexion();
-             log.fatal(ex);
+             log.warn(ex);
         }
     
     

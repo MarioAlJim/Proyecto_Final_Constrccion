@@ -92,7 +92,7 @@ public class CU21ConsultarProblematicasController implements Initializable {
         } catch (SQLException ex) {
             //Logger.getLogger(CU21ConsultarProblematicasController.class.getName()).log(Level.SEVERE, null, ex);
              avisoSinConexion();
-             log.fatal(ex);
+             log.warn(ex);
         }
     }
     
@@ -158,7 +158,7 @@ public class CU21ConsultarProblematicasController implements Initializable {
             stage.showAndWait();
 
         } catch (IOException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
     
     }

@@ -39,7 +39,7 @@ public class PeriodoDAO implements IPeriodoDAO {
                 }while (resultSet.next());
             }
         }catch (SQLException ex) {
-           log.fatal(ex);
+           log.warn(ex);
         }
         return periodos;
     }

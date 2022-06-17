@@ -50,7 +50,7 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
                 }while (resultSet.next());
             }
         } catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return tutoradosAsistencia;
     }

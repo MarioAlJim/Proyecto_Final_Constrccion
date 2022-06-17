@@ -50,7 +50,7 @@ public class SesionTutoriaDAO implements ISesionTutoriaDAO {
                 }while (resultSet.next());
             }
         }catch (SQLException ex) {
-            log.fatal(ex);
+            log.warn(ex);
         }
         return sesiones;
     }
@@ -121,7 +121,7 @@ public class SesionTutoriaDAO implements ISesionTutoriaDAO {
                 }while (resultSet.next());
             }
         }catch (SQLException ex) {
-           log.fatal(ex);
+           log.warn(ex);
         }
         return sesiones;
     }

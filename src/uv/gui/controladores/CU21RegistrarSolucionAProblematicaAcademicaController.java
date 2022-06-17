@@ -93,7 +93,7 @@ public class CU21RegistrarSolucionAProblematicaAcademicaController implements In
                }
            } catch (SQLException ex) {
                 avisoSinConexion();    
-                log.fatal(ex);
+                log.warn(ex);
            }
        } else {
             JOptionPane.showMessageDialog(null, "Campo de Solución vacio");

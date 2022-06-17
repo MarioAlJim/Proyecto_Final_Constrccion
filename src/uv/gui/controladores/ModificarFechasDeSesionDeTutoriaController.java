@@ -62,7 +62,7 @@ public class ModificarFechasDeSesionDeTutoriaController implements Initializable
             tfPeriodoActivo.setEditable(false);
         } catch (SQLException ex) {
             alertas.mostrarAlertaErrorConexionDB();
-            log.fatal(ex);
+            log.warn(ex);
         }
     }    
 

@@ -89,7 +89,7 @@ public class CU17RegistrarHorariodeSesiondeTutoriaGUIController implements Initi
                 alertas.mostrarAlertaNoHayPeriodosRegistrados();
             }
         } catch (SQLException exception) {
-            log.fatal(exception);
+            log.warn(exception);
         }
     }
 

@@ -81,7 +81,7 @@ public class CU37ConsultarOfertaAcademicaGUIController implements Initializable 
                 opcionesCombo.add(programaEducativo.getNombre());
             }
         } catch (SQLException exception) {
-            log.fatal(exception);
+            log.warn(exception);
         }
         cbbSeleccionProgramaEducativo.setItems(opcionesCombo);
         cbbSeleccionProgramaEducativo.getSelectionModel().select(0);
