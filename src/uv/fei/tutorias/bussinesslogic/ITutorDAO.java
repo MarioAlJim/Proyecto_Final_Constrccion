@@ -12,6 +12,4 @@ public interface ITutorDAO {
 
     public int registrarTutor(Tutor tutor) throws SQLException;
 
-    public List<Tutor> consultarTutorPorCuentaUv(String cuentaUVBuscada);
-
 }

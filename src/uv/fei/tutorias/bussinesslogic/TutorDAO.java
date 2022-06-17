@@ -77,46 +77,4 @@ final static Logger log = Logger.getLogger(TutorDAO.class);
     return filasInsertadas;
     }
 
-
-
-    @Override
-    public List<Tutor> consultarTutorPorCuentaUv(String cuentaUVBuscada) {
-    ArrayList<Tutor> tutores= new ArrayList<>();
-    DataBaseConnection dataBaseConnection = new DataBaseConnection();
-    try(Connection connection=dataBaseConnection.getConnection()){
-        String query="SELECT * FROM usuarios WHERE cuentauv = ?";
-        PreparedStatement statement=connection.prepareStatement(query);
-        statement.setString(1, cuentaUVBuscada);
-        ResultSet resultSet=statement.executeQuery();
-        if (!resultSet.next()){
-            throw new SQLException("No se encontraron cuentasUV");
-        }else{
-            String cuentaUV;
-            String contrasena;
-            String nombre;
-            String apellidoMaterno;
-            String apellidoPaterno;
-            String correo;
-            do {
-                cuentaUV = resultSet.getString("cuentauv");
-                contrasena = resultSet.getString("contrasena");
-                nombre = resultSet.getString("Nombre");
-                apellidoPaterno = resultSet.getString("ApellidoPaterno");
-                apellidoMaterno = resultSet.getString("ApellidoMaterno");
-                correo = resultSet.getString("Correo");
-                Tutor tutor = new Tutor();
-                tutor.setCuentaUV(cuentaUV);
-                tutor.setPassword(contrasena);
-                tutor.setNombre(nombre);
-                tutor.setApellidoPaterno(apellidoPaterno);
-                tutor.setApellidoMaterno(apellidoMaterno);
-                tutor.setCorreo(correo);
-                tutores.add(tutor);
-            }while (resultSet.next());
-        }
-        }catch (SQLException ex) {
-                log.fatal(ex);
-        }
-        return tutores;
-        }
     }

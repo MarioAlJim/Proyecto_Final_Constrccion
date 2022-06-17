@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -22,30 +23,25 @@ import uv.mensajes.Alertas;
 
 public class RegistrarFechasDeSesionDeTutoriaController implements Initializable{
 
-  
     @FXML
     private DatePicker dpPrimeraSesion;
-
     @FXML
     private DatePicker dpSegundaSesion;
-
     @FXML
     private DatePicker dpTerceraSesion;
-    
     @FXML
     private AnchorPane panelFechaSesionTutoria;
     @FXML
-    private Text tfPrimeraTutoria;
+    private TextField txtPeriodoActivo;
     @FXML
-    private Text tfSegundaTutoria;
+    private Text lblPrimeraTutoria;
     @FXML
-    private Text tfTerceraTutoria;
+    private Text lblSegundaTutoria;
     @FXML
-    private TextField lblPeriodoActivo;
-    
-    Stage stage;
+    private Text lblTerceraTutoria;
+
     Alertas alertas = new Alertas();
-    
+
     private Usuario usuarioActivo;
     private ProgramaEducativo programaEducativoActivo;
     
@@ -55,43 +51,27 @@ public class RegistrarFechasDeSesionDeTutoriaController implements Initializable
     }
 
     @FXML
-    void CancelarRegistro(ActionEvent event) {
-        /*Optional<ButtonType> respuesta = Alertas.mostrarAlertaBoton(Alert.AlertType.ERROR, "Cancelar", "Confirmar cancelar registro",
-                "¿Esta seguro de que desea cancelar el registro?");
-        if (respuesta.get() == ButtonType.OK) {
-                stage = (Stage) panelFechaSesionTutoria.getScene().getWindow();
-                stage.close();
-        }*/
-    }
-    
-
-    @FXML
     void enviar(ActionEvent event) throws SQLException{
-        registrarSesion(dpPrimeraSesion, tfPrimeraTutoria);
-        registrarSesion(dpSegundaSesion, tfSegundaTutoria);
-        registrarSesion(dpTerceraSesion, tfTerceraTutoria);
+        registrarSesion(dpPrimeraSesion, lblPrimeraTutoria);
+        registrarSesion(dpSegundaSesion, lblSegundaTutoria);
+        registrarSesion(dpTerceraSesion, lblTerceraTutoria);
     }
 
-    
     public void registrarSesion(DatePicker fechaTutoria, Text numeroTutoria) throws SQLException {
-        
         PeriodoDAO periodoDao = new PeriodoDAO();
         Periodo periodo = new Periodo();
         periodo = periodoDao.consultarPeriodoActivo();
         int idPeriodo = periodo.getIdPeriodo();
-        
         SesionTutoriaDAO SesionTutoriaDAO = new SesionTutoriaDAO();
         SesionTutoria nuevaSesionTutoria = new SesionTutoria();
-                
         String fecha = fechaTutoria.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        
         nuevaSesionTutoria.setFechaTutoria(fecha);
         nuevaSesionTutoria.setNumTutoria(numeroTutoria.getText());
         nuevaSesionTutoria.setIdPeriodo(idPeriodo);
         try{
-        SesionTutoriaDAO.registrarSesionTutoria(nuevaSesionTutoria);
+            SesionTutoriaDAO.registrarSesionTutoria(nuevaSesionTutoria);
         }catch(SQLException e){
-            //mostrarAlertaErrorConexionDB();
+            alertas.mostrarAlertaErrorConexionDB();
         }
     }
 
@@ -99,16 +79,20 @@ public class RegistrarFechasDeSesionDeTutoriaController implements Initializable
     public void initialize(URL location, ResourceBundle resources) {
         PeriodoDAO periodoDao = new PeriodoDAO();
         Periodo periodo = new Periodo();
-        
         try {
             periodo = periodoDao.consultarPeriodoActivo();
-            lblPeriodoActivo.setText(periodo.getFechaInicio()+ " - " + periodo.getFechaFin());
-            lblPeriodoActivo.setEditable(false);
-            //lblPeriodoActivo.setEnabled(false);
+            txtPeriodoActivo.setText(periodo.getFechaInicio()+ " - " + periodo.getFechaFin());
+            txtPeriodoActivo.setEditable(false);
             
         } catch (SQLException ex) {
-            //mostrarAlertaErrorConexionDB();
-            //Logger.getLogger(RegistrarFechasDeSesionDeTutoriaController.class.getName()).log(Level.SEVERE, null, ex);
+           alertas.mostrarAlertaErrorConexionDB();
         }
+    }
+
+    @FXML
+    private void cancelarRegistro(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 }

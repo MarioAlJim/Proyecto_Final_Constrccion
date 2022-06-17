@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -19,6 +20,7 @@ import uv.fei.tutorias.bussinesslogic.TutorDAO;
 import uv.fei.tutorias.domain.ProgramaEducativo;
 import uv.fei.tutorias.domain.Tutor;
 import uv.fei.tutorias.domain.Usuario;
+import uv.mensajes.Alertas;
 
 public class RegistrarTutorAcademicoGUIController implements Initializable {
 
@@ -43,9 +45,11 @@ public class RegistrarTutorAcademicoGUIController implements Initializable {
     @FXML
     private TextField tfPassword;
 
-    Stage stage;
+    Alertas alertas = new Alertas();
+
     @FXML
     private AnchorPane panelTutor;
+
     final static Logger log = Logger.getLogger(RegistrarTutorAcademicoGUIController.class);
     private Usuario usuarioActivo;
     private ProgramaEducativo programaEducativoActivo;
@@ -54,19 +58,15 @@ public class RegistrarTutorAcademicoGUIController implements Initializable {
         usuarioActivo = usuarioRecibido;
         programaEducativoActivo = programaEducativo;
     }
-
-
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     @FXML
     private void enviarInformacion(ActionEvent event) {
         if (tfCuenta.getText().isEmpty() || tfNombre.getText().isEmpty() || tfApellidoPaterno.getText().isEmpty() || tfApellidoMaterno.getText().isEmpty() || tfCorreo.getText().isEmpty() || tfPassword.getText().isEmpty() || tfCuenta.getText().isEmpty()) {
-                //mostrarAlertaCamposVacios();
-
+            alertas.mostrarAlertaCamposVacios();
             } else {
                 TutorDAO nuevoTutorDAO = new TutorDAO();
                 Tutor nuevoTutor = new Tutor();
@@ -77,31 +77,22 @@ public class RegistrarTutorAcademicoGUIController implements Initializable {
                 nuevoTutor.setCorreo(tfCorreo.getText());
                 nuevoTutor.setPassword(tfPassword.getText());
                 try {
-                nuevoTutorDAO.registrarTutor(nuevoTutor);
-                /*Optional<ButtonType> respuesta = Alertas.mostrarAlertaBoton(Alert.AlertType.INFORMATION, "Información registrada", 
-                        "Se a registrado con éxito la información", null);
-                if (respuesta.get() == ButtonType.OK) {
-                stage = (Stage) panelTutor.getScene().getWindow();
-                stage.close();
-                }*/
-                
+                    int registro = nuevoTutorDAO.registrarTutor(nuevoTutor);
+                    if (registro > 0) {
+                        alertas.mostrarAlertaRegistroExitoso();
+                    }
                 } catch (SQLException e) {
+                    alertas.mostrarAlertaErrorConexionDB();
                     log.fatal(e);
-                    //mostrarAlertaErrorConexionDB();
             }
         }
     }
-    
-        
 
     @FXML
     private void btnCancelar(ActionEvent event) {
-        /*Optional<ButtonType> respuesta = Alertas.mostrarAlertaBoton(Alert.AlertType.ERROR, "Cancelar", "Confirmar cancelar registro",
-                "¿Esta seguro de que desea cancelar el registro?");
-        if (respuesta.get() == ButtonType.OK) {
-                stage = (Stage) panelTutor.getScene().getWindow();
-                stage.close();
-        }*/
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
    
 }
