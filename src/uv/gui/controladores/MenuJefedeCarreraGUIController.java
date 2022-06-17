@@ -46,9 +46,6 @@ public class MenuJefedeCarreraGUIController implements Initializable {
         stageMenuJefe.show();
     }
 
-    @FXML
-    private void abrirConsultarProblematicas(ActionEvent event) throws IOException {
-    }
 
     @FXML
     private void abrirConsultarSoluciones(ActionEvent event) throws IOException, SQLException {

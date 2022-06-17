@@ -8,8 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.gui.controladores.MenuJefedeCarreraGUIController">
    <children>
-      <Button layoutX="62.0" layoutY="52.0" mnemonicParsing="false" onAction="#abrirConsultarReportePorTutor" prefHeight="40.0" prefWidth="190.0" text="Consultar Reporte por tutor" />
-      <Button layoutX="62.0" layoutY="147.0" mnemonicParsing="false" onAction="#abrirConsultarProblematicas" prefHeight="40.0" prefWidth="190.0" text="Modificar/EliminarProblematicas" />
-      <Button layoutX="317.0" layoutY="147.0" mnemonicParsing="false" onAction="#abrirConsultarSoluciones" prefHeight="40.0" prefWidth="211.0" text="Consultar soluciones problematicas " />
+      <Button layoutX="198.0" layoutY="75.0" mnemonicParsing="false" onAction="#abrirConsultarReportePorTutor" prefHeight="40.0" prefWidth="204.0" text="Consultar Reporte por tutor" />
+      <Button layoutX="195.0" layoutY="200.0" mnemonicParsing="false" onAction="#abrirConsultarSoluciones" prefHeight="40.0" prefWidth="211.0" text="Consultar soluciones problematicas " />
    </children>
 </AnchorPane>
