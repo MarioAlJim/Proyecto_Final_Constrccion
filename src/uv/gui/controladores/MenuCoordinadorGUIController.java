@@ -26,24 +26,9 @@ public class MenuCoordinadorGUIController implements Initializable {
         ProgramaEducativoDAO programaEducativoDAO = new ProgramaEducativoDAO();
         programaEducativo = programaEducativoDAO.obtenerProgramaEducativodeUsuario(usuarioActivo.getCuentaUV());
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-    }    
-
-    @FXML
-    private void abrirCOnsultarReporteGeneraldeTutorias(ActionEvent event) throws IOException, SQLException {
-        Stage stageMenuJefe = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(getClass().getResource("/uv/gui/interfaces/CU17RegistrarHorariodeSesiondeTutoriaGUI.fxml").openStream());
-        CU09ConsultarReportesporTutorController  cu09ConsultarReportesporTutorController = (CU09ConsultarReportesporTutorController) loader.getController();
-        cu09ConsultarReportesporTutorController.recibirParametros(usuarioActivo, programaEducativo);
-        Scene scene = new Scene(root);
-        stageMenuJefe.setScene(scene);
-        stageMenuJefe.setTitle("Consultar reporte general");
-        stageMenuJefe.alwaysOnTopProperty();
-        stageMenuJefe.initModality(Modality.APPLICATION_MODAL);
-        stageMenuJefe.show();
     }
 
     @FXML
@@ -119,19 +104,6 @@ public class MenuCoordinadorGUIController implements Initializable {
         Scene scene = new Scene(root);
         stageMenuJefe.setScene(scene);
         stageMenuJefe.setTitle("Consultar tutorados");
-        stageMenuJefe.alwaysOnTopProperty();
-        stageMenuJefe.initModality(Modality.APPLICATION_MODAL);
-        stageMenuJefe.show();
-    }
-
-    @FXML
-    private void abrirModificarAsignaciondeTutor(ActionEvent event) throws IOException{
-        Stage stageMenuJefe = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(getClass().getResource("/uv/gui/interfaces/ModificarAsignacionDeTutorAcademico.fxml").openStream());
-        Scene scene = new Scene(root);
-        stageMenuJefe.setScene(scene);
-        stageMenuJefe.setTitle("Modificar tutor de tutorado");
         stageMenuJefe.alwaysOnTopProperty();
         stageMenuJefe.initModality(Modality.APPLICATION_MODAL);
         stageMenuJefe.show();

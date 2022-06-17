@@ -28,7 +28,6 @@ public class MenuJefedeCarreraGUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }    
 
     @FXML
@@ -46,14 +45,13 @@ public class MenuJefedeCarreraGUIController implements Initializable {
         stageMenuJefe.show();
     }
 
-
     @FXML
     private void abrirConsultarSoluciones(ActionEvent event) throws IOException, SQLException {
         Stage stageMenuJefe = new Stage();
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResource("/uv/gui/interfaces/CU21ConsultarProblematicas.fxml").openStream());
-        CU21ConsultarProblematicasController cu07ConsultarProblematicasController = (CU21ConsultarProblematicasController) loader.getController();
-        cu07ConsultarProblematicasController.recibirParametros(usuarioActivo, programaEducativo);
+        CU21ConsultarProblematicasController CU21ConsultarProblematicasController = (CU21ConsultarProblematicasController) loader.getController();
+        CU21ConsultarProblematicasController.recibirParametros(usuarioActivo, programaEducativo);
         Scene scene = new Scene(root);
         stageMenuJefe.setScene(scene);
         stageMenuJefe.setTitle("Modificar / eliminar problematicas");
@@ -61,5 +59,4 @@ public class MenuJefedeCarreraGUIController implements Initializable {
         stageMenuJefe.initModality(Modality.APPLICATION_MODAL);
         stageMenuJefe.show();
     }
-    
 }
