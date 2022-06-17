@@ -5,27 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import uv.fei.tutorias.domain.SesionTutoria;
 
-/**
- *
- * @author Usuario
- */
 public interface ISesionTutoriaDAO {
     public List<SesionTutoria> consultarSesionesTutoriaPorNumero(String tutoriaBuscada);
 
-    public SesionTutoria consultarSesionesTutoriaPorFechayPeriodo(String fechatutoria, int idPeriodo);
-
     public int registrarSesionTutoria(SesionTutoria sesionTutoria) throws SQLException;
-
-    public int registrarCierreDeReporte(SesionTutoria sesionTutoria);
-
-    public int eliminarSesionTutoriaPorId(int idTutoria);
-    
-    public List<SesionTutoria> consultarTutoriaPorId(int idTutoriaBuscada);
 
     public ArrayList<SesionTutoria> consultarTutoriaPorPeriodo(int idPeriodo) throws SQLException;
     
-    public List<SesionTutoria> consultarTodosLasSesiones() throws SQLException;
-    
+    public List<SesionTutoria> consultarTodosLasSesiones();
+
+    public int actualizarFechasDeSesionTutoria(SesionTutoria sesionTutoria, int idPeriodo, String numTutoria) throws SQLException;
+
+    public int registrarFechaDeCierreDeReporte(SesionTutoria sesionTutoria, int idPeriodo, String numTutoria) throws SQLException;
+
 }
 
 

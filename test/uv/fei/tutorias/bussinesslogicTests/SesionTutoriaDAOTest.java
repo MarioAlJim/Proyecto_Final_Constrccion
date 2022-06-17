@@ -53,32 +53,17 @@ public class SesionTutoriaDAOTest {
         assertEquals(expResult, result);
     }
 
+
     @Test
-    public void testEliminarSesionTutoriaPorId() {
-        System.out.println("eliminarSesionTutoriaPorId");
-        int idTutoria = 0;
-        SesionTutoriaDAO instance = new SesionTutoriaDAO();
-        int expResult = 0;
-        int result = instance.eliminarSesionTutoriaPorId(idTutoria);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-/*
-    @Test
-    public void testConsultarSesionesTutoriaPorNumero() {
+    public void testConsultarSesionesTutoriaPorNumero1() {
         System.out.println("consultarSesionesTutoriaPorNumero");
-        int tutoriaBuscada = 0;
+        String tutoriaBuscada = "0";
         SesionTutoriaDAO instance = new SesionTutoriaDAO();
         List<SesionTutoria> expResult = null;
         List<SesionTutoria> result = instance.consultarSesionesTutoriaPorNumero(tutoriaBuscada);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
-    */
 
-    /**
-     * Test of consultarSesionesTutoriaPorNumero method, of class SesionTutoriaDAO.
-     */
     @Test
     public void testConsultarSesionesTutoriaPorNumero() {
         System.out.println("consultarSesionesTutoriaPorNumero");
@@ -87,37 +72,6 @@ public class SesionTutoriaDAOTest {
         List<SesionTutoria> expResult = null;
         List<SesionTutoria> result = instance.consultarSesionesTutoriaPorNumero(tutoriaBuscada);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of registrarCierreDeReporte method, of class SesionTutoriaDAO.
-     */
-    @Test
-    public void testRegistrarCierreDeReporte() {
-        System.out.println("registrarCierreDeReporte");
-        SesionTutoriaDAO sesionTutoriaDAO = new SesionTutoriaDAO();
-        SesionTutoria nuevaSesionTutoria = new SesionTutoria();
-        nuevaSesionTutoria.setFechaCierreReportes("2022-06-05");
-        
-        sesionTutoriaDAO.registrarCierreDeReporte(nuevaSesionTutoria);
-
-        int idTutoriaBuscada = 55;
-        ArrayList<SesionTutoria> expResult = new ArrayList<>();
-        SesionTutoria tutoriaEsperada = new SesionTutoria();
-        tutoriaEsperada.setFechaCierreReportes("2022-06-05");
-        
-        expResult.add(tutoriaEsperada);
-        ArrayList<SesionTutoria> result = (ArrayList<SesionTutoria>) sesionTutoriaDAO.consultarTutoriaPorId(idTutoriaBuscada);
-        
-        for(SesionTutoria sesionTutoria : result){
-            System.out.println(String.format("%s",sesionTutoria.getFechaCierreReportes()));
-        }
-        for(SesionTutoria sesionTutoria : expResult){
-            System.out.println(String.format("%s", sesionTutoria.getFechaCierreReportes()));
-        }
-        assertEquals(expResult, result);
-
-    }
 }

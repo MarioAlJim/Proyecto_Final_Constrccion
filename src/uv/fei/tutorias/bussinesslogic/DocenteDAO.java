@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class DocenteDAO implements IDocentesDAO{
 
-
     @Override
     public ArrayList<Docente> recuperarDocentesPorProgramaEducativo(int idPrograma) throws SQLException {
         ArrayList<Docente> docentes = new ArrayList();

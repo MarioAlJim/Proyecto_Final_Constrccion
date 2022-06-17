@@ -10,13 +10,8 @@ public interface IPeriodoDAO {
     
     public ArrayList<Periodo> consultarTodosLosPeriodos();
 
-    public Periodo consultarPeriodoPorId(int idPeriodoBuscado);
-
     public Periodo consultarPeriodoActivo() throws SQLException;
     
     public int registrarPeriodo(Periodo periodo);
 
-    public int eliminarPeriodoId(int idPeriodo);
-
-    public int actualizarPeriodo(Periodo periodo);
 }

@@ -1,4 +1,3 @@
-
 package uv.fei.tutorias.bussinesslogic;
 
 import java.sql.Connection;
@@ -10,8 +9,7 @@ import uv.fei.tutorias.dataaccess.DataBaseConnection;
 import uv.fei.tutorias.domain.ExperienciaEducativa;
 
 public class ExperienciaEducativaDAO implements IExperienciaEducativaDAO{
-    
-    
+
     @Override
     public ArrayList<ExperienciaEducativa> consultarExperienciasNoAsignadas() throws SQLException {
         ArrayList<ExperienciaEducativa> experienciasEducativas = new ArrayList<>();
@@ -88,6 +86,5 @@ public class ExperienciaEducativaDAO implements IExperienciaEducativaDAO{
         }
         return experienciaEducativas;
     }
-
 
 }

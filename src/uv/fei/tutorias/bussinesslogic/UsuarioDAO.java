@@ -1,18 +1,15 @@
 package uv.fei.tutorias.bussinesslogic;
 
-import org.apache.log4j.Logger;
 import uv.fei.tutorias.dataaccess.DataBaseConnection;
 import uv.fei.tutorias.domain.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 import uv.encrypt.SHA512;
 
 public class UsuarioDAO implements IUsuarioDAO{
 
-    final static Logger log = Logger.getLogger(SesionTutoriaDAO.class);
 
     @Override
     public Usuario recuperarSesion(String cuentauv, String contrasena) throws SQLException {

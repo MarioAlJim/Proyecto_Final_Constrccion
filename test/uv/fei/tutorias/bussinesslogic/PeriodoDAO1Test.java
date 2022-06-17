@@ -34,28 +34,6 @@ public class PeriodoDAO1Test {
     }
 
     @Test
-    public void testEliminarPeriodoId() {
-        System.out.println("eliminarPeriodoId");
-        int idPeriodo = 0;
-        PeriodoDAO instance = new PeriodoDAO();
-        int expResult = 0;
-        int result = instance.eliminarPeriodoId(idPeriodo);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testActualizarPeriodo() {
-        System.out.println("actualizarPeriodo");
-        Periodo periodo = null;
-        PeriodoDAO instance = new PeriodoDAO();
-        int expResult = 0;
-        int result = instance.actualizarPeriodo(periodo);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
     public void testConsultarPeriodoPorId() throws SQLException {
         System.out.println("consultarPeriodoPorId");
         int idPeriodoBuscado = 0;

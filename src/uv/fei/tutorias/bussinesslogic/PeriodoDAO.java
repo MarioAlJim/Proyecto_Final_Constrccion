@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import org.apache.log4j.Logger;
 
 public class PeriodoDAO implements IPeriodoDAO {
@@ -62,41 +61,6 @@ public class PeriodoDAO implements IPeriodoDAO {
             log.error(ex);
         }
         return filasInsertadas;
-    }
-
-    @Override
-    public int eliminarPeriodoId(int idPeriodo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public int actualizarPeriodo(Periodo periodo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Periodo consultarPeriodoPorId(int idPeriodoBuscado) {
-        Periodo periodo = new Periodo();
-        DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        try(Connection connection=dataBaseConnection.getConnection()){
-            String query="SELECT * FROM periodo WHERE IdPeriodo = ?";
-            PreparedStatement statement=connection.prepareStatement(query);
-            statement.setInt(1, idPeriodoBuscado);
-            ResultSet resultSet=statement.executeQuery();
-            if (!resultSet.next()){
-                throw new SQLException("No se encontraron periodos");
-            }else{
-                String fechaInicio;
-                String fechaFin;
-                fechaInicio = resultSet.getString("FechaInicio");
-                fechaFin = resultSet.getString("FechaFin");
-                periodo.setFechaInicio(fechaInicio);
-                periodo.setFechaFin(fechaFin);
-            }
-        }catch (SQLException ex) {
-            log.fatal(ex);
-        }
-        return periodo;
     }
 
     @Override

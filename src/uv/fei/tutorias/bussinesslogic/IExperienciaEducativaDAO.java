@@ -4,10 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import uv.fei.tutorias.domain.ExperienciaEducativa;
 
-/**
- *
- * @author Valea
- */
 public interface IExperienciaEducativaDAO {
 
     public ArrayList<ExperienciaEducativa> consultarExperienciasNoAsignadas()throws SQLException;
