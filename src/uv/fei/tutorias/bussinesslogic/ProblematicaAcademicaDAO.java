@@ -97,6 +97,7 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         return filasInsertadas;
     }
 
+    @Override
     public int obtenerIdProblematica(String titulo, int cantidadTutorados) throws SQLException{
         int idProblematica = 0;
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
@@ -139,10 +140,9 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, idProblematicaAcademica);
         filasActualizadas = statement.executeUpdate();
-        System.out.println(filasActualizadas + " filas modificadas");
         return filasActualizadas;
     }
-    
+
     @Override
     public int actualizarProblematica(ProblematicaAcademica problematicaAcademica) throws SQLException {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
@@ -151,16 +151,22 @@ public class ProblematicaAcademicaDAO implements IPoblematicaAcademicaDAO{
         int idProblematicaAcademica = problematicaAcademica.getIdProblematicaAcademica();
         String descripcion = problematicaAcademica.getDescripcion();
         String titulo = problematicaAcademica.getTitulo();
+        if(!titulo.isEmpty() && !descripcion.isEmpty() && !titulo.trim().isEmpty() && !descripcion.trim().isEmpty()){
+            String query;
+            query = ("UPDATE tutoriasproblematicasacademicas SET titulo = ?, descripcion = ? WHERE idproblemaacademica=?;");
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, titulo);
+            statement.setString(2, descripcion);
+            statement.setInt(3, idProblematicaAcademica);
+            filasActualizadas = statement.executeUpdate();
+            System.out.println(filasActualizadas + " filas modificadas");
+            filasActualizadas=1;
 
-        String query;
-        query = ("UPDATE tutoriasproblematicasacademicas SET titulo = ?, descripcion = ? WHERE idproblemaacademica=?;");
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, titulo);
-        statement.setString(2, descripcion);
-        statement.setInt(3, idProblematicaAcademica);
-        filasActualizadas = statement.executeUpdate();
-        System.out.println(filasActualizadas + " filas modificadas");
+        }else{
+            filasActualizadas=0;
+        }
         return filasActualizadas;
+
     }
 
 }

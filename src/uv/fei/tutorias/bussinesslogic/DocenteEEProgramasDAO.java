@@ -57,34 +57,7 @@ public class DocenteEEProgramasDAO implements IDocenteEEProgramasDAO {
         }
         return programasEducativos;
     }
-    
-    @Override
-    public ArrayList<Periodo> consultarPeriodos() throws SQLException {
-        ArrayList<Periodo> periodos = new ArrayList<>();
-        DataBaseConnection dataBaseConnection = new DataBaseConnection();
-        Connection connection = dataBaseConnection.getConnection();
-        String query = "SELECT idperiodo, fechafin, fechainicio FROM periodo;";
-        PreparedStatement statement = connection.prepareStatement(query);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            int idperiodo;
-            String fechainicio;
-            String fechafin;
-            do {
-                idperiodo = resultSet.getInt("idperiodo");
-                fechainicio = resultSet.getString("fechainicio");
-                fechafin = resultSet.getString("fechafin");
-                Periodo periodo = new Periodo();
-                periodo.setIdPeriodo(idperiodo);
-                periodo.setFechaFin(fechainicio);
-                periodo.setFechaInicio(fechafin);
 
-                periodos.add(periodo);
-            } while (resultSet.next());
-        }
-        return periodos;
-    }
-    
     @Override
     public int consultarProgramaSeleccionado(String programa) throws SQLException {
         int idprograma = 0;
@@ -95,7 +68,6 @@ public class DocenteEEProgramasDAO implements IDocenteEEProgramasDAO {
         statement.setString(1, programa);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
-
             idprograma = resultSet.getInt("idprogramaeducativo");
         }
         return idprograma;

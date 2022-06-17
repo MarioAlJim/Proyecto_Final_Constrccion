@@ -20,4 +20,5 @@ public interface IPoblematicaAcademicaDAO {
 
     public int eliminarProblematicaSesiones(ProblematicaAcademica problematicaAcademica) throws SQLException;
 
+    public int obtenerIdProblematica(String titulo, int cantidadTutorados) throws SQLException;
 }
