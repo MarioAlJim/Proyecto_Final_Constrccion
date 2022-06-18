@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package uv.fei.tutorias.bussinesslogic;
 
 import java.util.ArrayList;
@@ -9,18 +5,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import uv.fei.tutorias.domain.ExperienciaEducativa;
 
-/**
- *
- * @author Valea
- */
 public class ExperienciaEducativaDAOTest {
-    
-    public ExperienciaEducativaDAOTest() {
-    }
 
-    /**
-     * Test of consultarExperienciasNoAsignadas method, of class ExperienciaEducativaDAO.
-     */
     @Test
     public void testConsultarExperienciasNoAsignadas() throws Exception {
         System.out.println("consultarExperienciasNoAsignadas");
@@ -28,8 +14,107 @@ public class ExperienciaEducativaDAOTest {
         int expResult = 4;
         ArrayList<ExperienciaEducativa> result = instance.consultarExperienciasNoAsignadas();
         assertEquals(expResult, result.size());
-        // TODO review the generated test code and remove the default call to fail.
-        
+    }
+
+    @Test
+    public void testConsultarExperienciasPorPrograma() throws Exception {
+        System.out.println("consultarExperienciasPorPrograma");
+        int idProgramaEducativo = 1;
+        ExperienciaEducativaDAO instance = new ExperienciaEducativaDAO();
+        int expResult = 0;
+        int resultado = 4;
+        ArrayList<ExperienciaEducativa> result = instance.consultarExperienciasPorPrograma(idProgramaEducativo);
+        for(ExperienciaEducativa experiencia : result) {
+            resultado += 1;
+        }
+        System.out.println(resultado);
+        assertEquals(expResult, result);
     }
     
+    @Test
+    public void testConsultarExperienciasPorPrograma1() throws Exception {
+        System.out.println("consultarExperienciasPorPrograma");
+        int idProgramaEducativo = 2;
+        ExperienciaEducativaDAO instance = new ExperienciaEducativaDAO();
+        int expResult = 6;
+        int resultado = 0;
+        ArrayList<ExperienciaEducativa> result = instance.consultarExperienciasPorPrograma(idProgramaEducativo);
+        for(ExperienciaEducativa experiencia : result) {
+            resultado += 1;
+        }
+        System.out.println(resultado);
+        assertEquals(expResult, resultado);
+    }
+    
+    @Test
+    public void testConsultarExperienciasPorPrograma2() throws Exception {
+        System.out.println("consultarExperienciasPorPrograma");
+        int idProgramaEducativo = 3;
+        ExperienciaEducativaDAO instance = new ExperienciaEducativaDAO();
+        int expResult = 1;
+        int resultado = 0;
+        ArrayList<ExperienciaEducativa> result = instance.consultarExperienciasPorPrograma(idProgramaEducativo);
+        for(ExperienciaEducativa experiencia : result) {
+            resultado += 1;
+        }
+        System.out.println(resultado);
+        assertEquals(expResult, resultado);
+    }
+    
+        @Test
+    public void testConsultarExperienciasPorPrograma3() throws Exception {
+        System.out.println("consultarExperienciasPorPrograma");
+        int idProgramaEducativo = 0;
+        ExperienciaEducativaDAO instance = new ExperienciaEducativaDAO();
+        int expResult = 0;
+        int resultado = 0;
+        ArrayList<ExperienciaEducativa> result = instance.consultarExperienciasPorPrograma(idProgramaEducativo);
+        for(ExperienciaEducativa experiencia : result) {
+            resultado += 1;
+        }
+        System.out.println(resultado);
+        assertEquals(expResult, resultado);
+    }
+
+    @Test
+    public void testConsultarExperienciasPorDocente() throws Exception {
+        System.out.println("consultarExperienciasPorDocente");
+        int numPersonal = 3434;
+        ExperienciaEducativaDAO instance = new ExperienciaEducativaDAO();
+        int expResult = 2;
+        int resultado = 0;
+        ArrayList<ExperienciaEducativa> result = instance.consultarExperienciasPorDocente(numPersonal);
+        for(ExperienciaEducativa experiencia : result) {
+            resultado += 1;
+        }
+        assertEquals(expResult, resultado);
+    }
+    
+    @Test
+    public void testConsultarExperienciasPorDocente1() throws Exception {
+        System.out.println("consultarExperienciasPorDocente");
+        int numPersonal = 45678;
+        ExperienciaEducativaDAO instance = new ExperienciaEducativaDAO();
+        int expResult = 7;
+        int resultado = 0;
+        ArrayList<ExperienciaEducativa> result = instance.consultarExperienciasPorDocente(numPersonal);
+        for(ExperienciaEducativa experiencia : result) {
+            resultado += 1;
+        }
+        assertEquals(expResult, resultado);
+    }
+    
+    @Test
+    public void testConsultarExperienciasPorDocente2() throws Exception {
+        System.out.println("consultarExperienciasPorDocente");
+        int numPersonal = 123456;
+        ExperienciaEducativaDAO instance = new ExperienciaEducativaDAO();
+        int expResult = 3;
+        int resultado = 0;
+        ArrayList<ExperienciaEducativa> result = instance.consultarExperienciasPorDocente(numPersonal);
+        for(ExperienciaEducativa experiencia : result) {
+            resultado += 1;
+        }
+        assertEquals(expResult, resultado);
+    }
 }

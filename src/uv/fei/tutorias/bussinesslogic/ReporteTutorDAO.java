@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package uv.fei.tutorias.bussinesslogic;
 
 import java.sql.Connection;
@@ -77,11 +73,13 @@ public class ReporteTutorDAO implements IReporteTutorDAO {
         String cuentaUv = reporteTutor.getCuentaUv();
         String query = "INSERT INTO sesion (IdProgramaEducativo, IdTutoria, cuentauv) "
                 + "VALUES ( ?, ?, ?)";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, idProgramaEducativo);
-        statement.setInt(2, idTutoria);
-        statement.setString(3, cuentaUv);
-        filasInsertadas = statement.executeUpdate();
+        if (idProgramaEducativo > 0 && idTutoria > 0 && !cuentaUv.isEmpty()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idProgramaEducativo);
+            statement.setInt(2, idTutoria);
+            statement.setString(3, cuentaUv);
+            filasInsertadas = statement.executeUpdate();
+        }
         return filasInsertadas;
     }
 

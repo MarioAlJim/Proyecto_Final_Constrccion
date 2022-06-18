@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SistemaTutorias.jar" size="282843" download="eager" />
+    <jar href="SistemaTutorias.jar" size="269184" download="eager" />
     <jar href="lib\log4j-1.2.17.jar" size="489883" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.47.jar" size="1007502" download="eager" />
   </resources>

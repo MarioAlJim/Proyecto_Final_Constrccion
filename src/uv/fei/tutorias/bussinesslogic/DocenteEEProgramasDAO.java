@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import uv.fei.tutorias.dataaccess.DataBaseConnection;
 import uv.fei.tutorias.domain.DocenteEEPrograma;
 import uv.fei.tutorias.domain.ProgramaEducativo;
-import uv.fei.tutorias.domain.Periodo;
 import org.apache.log4j.Logger;
 
 public class DocenteEEProgramasDAO implements IDocenteEEProgramasDAO {
@@ -23,13 +22,11 @@ public class DocenteEEProgramasDAO implements IDocenteEEProgramasDAO {
         Connection connection = dataBaseConnection.getConnection();
         int Numpersonal = numpersonal;
         int NRC = nrc;
-        String query
-                = ("INSERT INTO docenteseeprogramas (numpersonal, nrc, idPeriodo, idProgramaEducativo ) VALUES (?,?,(select p.idperiodo from periodo p where p.activo=1),?) ");
+        String query = ("INSERT INTO docenteseeprogramas (numpersonal, nrc, idPeriodo, idProgramaEducativo ) VALUES (?,?,(select p.idperiodo from periodo p where p.activo=1),?) ");
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, Numpersonal);
         statement.setInt(2, NRC);
         statement.setInt(3, idprogramaeducativo);
-
         filasInsertadas = statement.executeUpdate();
         System.out.println(filasInsertadas + " Fila insertada ");
         return filasInsertadas;

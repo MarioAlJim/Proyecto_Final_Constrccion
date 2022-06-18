@@ -1,20 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package uv.fei.tutorias.bussinesslogicTests;
 
 import org.junit.Test;
 import uv.fei.tutorias.bussinesslogic.TutorTutoradoDAO;
-
 import java.sql.SQLException;
-
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Valea
- */
 public class TutorTutoradoDAOTest {
     
     public TutorTutoradoDAOTest() {
@@ -32,9 +22,5 @@ public class TutorTutoradoDAOTest {
         assertEquals(expResult, result);
     }
 
-     
-    @Test
-    public void testConsultarTutoresTutoradosporId() {
-    }
     
 }

@@ -1,10 +1,6 @@
 
 package uv.fei.tutorias.domain;
 
-/**
- *
- * @author Valea
- */
 public class ExperienciaEducativa {
     private int nrc; 
     private String nombre;

@@ -13,16 +13,6 @@ public class PeriodoDAO1Test {
     }
 
     @Test
-    public void testConsultarTodosLosPeriodos() {
-        System.out.println("consultarTodosLosPeriodos");
-        PeriodoDAO instance = new PeriodoDAO();
-        ArrayList<Periodo> expResult = null;
-        ArrayList<Periodo> result = instance.consultarTodosLosPeriodos();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
     public void testRegistrarPeriodo() {
         System.out.println("registrarPeriodo");
         Periodo periodo = null;
@@ -30,7 +20,6 @@ public class PeriodoDAO1Test {
         int expResult = 0;
         int result = instance.registrarPeriodo(periodo);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package uv.fei.tutorias.bussinesslogic;
 
 import java.util.ArrayList;
@@ -15,13 +11,45 @@ public class DocenteDAOTest {
     }
 
     @Test
-    public void testRecuperarDocentesPorProgramaEducativo() throws Exception {
+    public void testRecuperarDocentesPorProgramaEducativo1() throws Exception {
+        System.out.println("recuperarDocentesPorProgramaEducativo");
+        int idPrograma = 1;
+        int cantidadDocentes = 0;
+        DocenteDAO instance = new DocenteDAO();
+        int expResult = 3;
+        ArrayList<Docente> result = instance.recuperarDocentesPorProgramaEducativo(idPrograma);
+        for (Docente docente : result) {
+            cantidadDocentes += 1;
+        }
+        assertEquals(expResult, cantidadDocentes);
+    }
+    
+    @Test
+    public void testRecuperarDocentesPorProgramaEducativo2() throws Exception {
         System.out.println("recuperarDocentesPorProgramaEducativo");
         int idPrograma = 0;
         DocenteDAO instance = new DocenteDAO();
-        ArrayList<Docente> expResult = null;
+        int expResult = 0;
+        int cantidadDocentes = 0;
         ArrayList<Docente> result = instance.recuperarDocentesPorProgramaEducativo(idPrograma);
-        assertEquals(expResult, result);
+        for (Docente docente : result) {
+            cantidadDocentes += 1;
+        }
+        assertEquals(expResult, cantidadDocentes);
+    }
+    
+    @Test
+    public void testRecuperarDocentesPorProgramaEducativo3() throws Exception {
+        System.out.println("recuperarDocentesPorProgramaEducativo");
+        int idPrograma = 2;
+        DocenteDAO instance = new DocenteDAO();
+        int expResult = 5;
+        int cantidadDocentes = 0;
+        ArrayList<Docente> result = instance.recuperarDocentesPorProgramaEducativo(idPrograma);
+        for (Docente docente : result) {
+            cantidadDocentes += 1;
+        }
+        assertEquals(expResult, cantidadDocentes);
     }
     
 }
